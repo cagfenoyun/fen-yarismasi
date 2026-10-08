@@ -3,162 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>FEN BİLGİSİ YARIŞMASI</title>
+<title>Fen Bilimleri Yarışması</title>
 <link rel="icon" href="cagfen-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0F3329;--muted:#4C7568;--green:#1E9E5A;--green-dark:#127340;--turq:#0BB5B0;--turq-dark:#07827F;--lime:#8BD450;--gold:#E59A00;--wrong:#E5534B;--blue:#2F8FE0;--line:rgba(20,90,65,.16);--card:rgba(255,255,255,.9);--shadow:0 14px 34px rgba(20,100,80,.18)}
+:root{--ink:#10302A;--muted:#4E6F67;--red:#1FA463;--red-dark:#0E6B40;--turq:#00A3A3;--turq-dark:#007A7A;--gold:#B58A00;--green:#1F9D55;--wrong:#E8505B;--line:rgba(15,70,55,.15);--card:rgba(255,255,255,.9);--shadow:0 14px 34px rgba(20,90,70,.18)}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;height:100%;font-family:'Nunito',sans-serif;color:var(--ink);overflow:auto;-webkit-user-select:none;user-select:none;
-background:radial-gradient(circle at 12% 8%,rgba(190,245,170,.75),transparent 45%),radial-gradient(circle at 88% 10%,rgba(150,235,225,.7),transparent 48%),radial-gradient(circle at 90% 92%,rgba(160,225,255,.6),transparent 50%),radial-gradient(circle at 6% 90%,rgba(220,250,160,.6),transparent 48%),linear-gradient(160deg,#F2FFF5,#E6FAF3 50%,#E3F6FB);background-attachment:fixed}
+background:radial-gradient(circle at 15% 10%,rgba(190,240,170,.7),transparent 45%),radial-gradient(circle at 85% 12%,rgba(150,230,215,.6),transparent 48%),radial-gradient(circle at 88% 90%,rgba(130,225,225,.6),transparent 50%),radial-gradient(circle at 8% 88%,rgba(215,245,160,.55),transparent 48%),linear-gradient(160deg,#F2FBF1,#E9F8F3 50%,#E3F6F8)}
 #app{position:relative;width:100vw;min-height:100vh;display:flex;flex-direction:column;z-index:1}
-#bg-fx,#bg-floaters{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
-.glow-orb{position:absolute;border-radius:50%;filter:blur(50px);opacity:.35;animation:orbFloat 22s ease-in-out infinite}
+#bg-fx{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.glow-orb{position:absolute;border-radius:50%;filter:blur(46px);opacity:.38;animation:orbFloat 20s ease-in-out infinite;will-change:transform}
 @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-40px) scale(1.15)}66%{transform:translate(-50px,50px) scale(.92)}}
-.sci-sym{position:absolute;opacity:.4;animation:symDrift ease-in-out infinite;filter:drop-shadow(0 4px 8px rgba(20,100,80,.2))}
-@keyframes symDrift{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(30px,-50px) rotate(10deg)}}
-.bg-floater{position:absolute;opacity:.55;filter:drop-shadow(0 8px 16px rgba(20,100,80,.25));animation:floatDrift ease-in-out infinite}
-@keyframes floatDrift{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(24px,-34px) rotate(7deg)}50%{transform:translate(-18px,-60px) rotate(-5deg)}75%{transform:translate(18px,-30px) rotate(4deg)}}
-#topbar{display:flex;align-items:center;gap:18px;padding:10px 32px;background:rgba(255,255,255,.75);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);position:sticky;top:0;z-index:50;flex-shrink:0}
-.brand-icon{height:52px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(20,100,80,.25))}
+.math-sym{position:absolute;font-family:'Baloo 2',Georgia,serif;font-weight:800;line-height:1;user-select:none;will-change:transform;animation:symDrift ease-in-out infinite,neonPulse 3.6s ease-in-out infinite alternate}
+@keyframes symDrift{0%,100%{transform:translate(0,0) rotate(var(--r0))}50%{transform:translate(var(--dx),var(--dy)) rotate(var(--r1))}}
+@keyframes neonPulse{0%{opacity:.32;text-shadow:0 0 5px currentColor,0 0 14px currentColor}100%{opacity:.6;text-shadow:0 0 9px currentColor,0 0 26px currentColor,0 0 44px currentColor}}
+#bg-floaters{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.bg-floater{position:absolute;opacity:.5;filter:drop-shadow(0 8px 16px rgba(20,90,70,.25));animation:floatDrift ease-in-out infinite}
+@keyframes floatDrift{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(22px,-34px) rotate(7deg)}50%{transform:translate(-16px,-58px) rotate(-5deg)}75%{transform:translate(18px,-30px) rotate(4deg)}}
+.burst-layer{position:fixed;left:0;top:0;width:0;height:0;z-index:9999;pointer-events:none}
+.burst-piece{position:absolute;width:64px;height:64px;object-fit:contain;transform:translate(-50%,-50%);animation:burstFly 1.8s cubic-bezier(.15,.7,.25,1) forwards;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3))}
+@keyframes burstFly{0%{transform:translate(-50%,-50%) scale(.6);opacity:1}12%{transform:translate(-50%,-50%) scale(1.25);opacity:1}70%{transform:translate(calc(-50% + var(--tx)*.9),calc(-50% + var(--ty)*.9)) scale(.85) rotate(calc(var(--rot)*.85));opacity:1}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(.3) rotate(var(--rot));opacity:0}}
+#topbar{display:flex;align-items:center;gap:20px;padding:12px 40px;background:rgba(255,255,255,.7);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);position:relative;z-index:20;flex-shrink:0}
+.brand-icon{height:60px;width:auto;flex-shrink:0;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(20,90,70,.25))}
 .brand-text{display:flex;flex-direction:column;line-height:1.05}
-.brand-text .club{font-family:'Baloo 2';font-weight:800;font-size:26px;color:var(--green-dark)}
-.brand-text .sub{font-size:14px;color:var(--muted);font-weight:700}
+.brand-text .club{font-family:'Baloo 2';font-weight:800;font-size:30px;color:var(--red-dark)}
+.brand-text .sub{font-size:16px;color:var(--muted);font-weight:700}
 .spacer{flex:1}
-#room-badge{display:none;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:14px;font-family:'Baloo 2';font-size:16px;font-weight:700;color:var(--muted)}
-#room-badge b{color:var(--gold);letter-spacing:4px;font-size:21px}
-#fs-btn{background:#fff;border:1px solid var(--line);border-radius:14px;height:44px;padding:0 16px;cursor:pointer;font-family:'Baloo 2';font-weight:700;font-size:17px;color:var(--ink);display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 10px rgba(20,100,80,.12)}
-#fs-btn:hover{background:#E6FBEF}
+#room-badge{display:none;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);padding:10px 20px;border-radius:16px;font-family:'Baloo 2';font-size:19px;font-weight:700;color:var(--muted)}
+#room-badge b{color:var(--gold);letter-spacing:4px;font-size:22px}
+#fs-btn{background:#fff;border:1px solid var(--line);border-radius:14px;height:48px;padding:0 18px;cursor:pointer;font-family:'Baloo 2';font-weight:700;font-size:18px;color:var(--ink);display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 10px rgba(20,90,70,.12);-webkit-tap-highlight-color:transparent}
+#fs-btn:hover{background:#E4F6EA}
 #fs-btn:active{transform:scale(.96)}
-.screen{display:none;flex:1;min-height:0;flex-direction:column;align-items:center;justify-content:center;padding:20px 24px 36px;position:relative}
+.screen{display:none;flex:1;min-height:0;flex-direction:column;align-items:center;justify-content:center;padding:20px 32px 36px;position:relative}
 .screen.active{display:flex}
-.card{background:var(--card);border:1px solid var(--line);border-top:6px solid var(--turq);border-radius:28px;box-shadow:var(--shadow);padding:44px 50px;backdrop-filter:blur(10px)}
-h1.title{font-family:'Baloo 2';font-weight:800;font-size:clamp(34px,5vw,58px);margin:0 0 8px;text-align:center;color:var(--green-dark);line-height:1.1}
-p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 30px;font-size:21px}
-.btn{font-family:'Baloo 2';font-weight:700;font-size:22px;border:none;border-radius:18px;cursor:pointer;padding:16px 34px;color:#fff;transition:.12s ease;-webkit-tap-highlight-color:transparent}
+.card{background:var(--card);border:1px solid var(--line);border-top:6px solid var(--turq);border-radius:28px;box-shadow:var(--shadow);padding:52px 60px;backdrop-filter:blur(10px)}
+h1.title{font-family:'Baloo 2';font-weight:800;font-size:clamp(38px,5vw,60px);margin:0 0 10px;text-align:center;color:var(--red-dark)}
+p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 36px;font-size:22px}
+.btn{font-family:'Baloo 2';font-weight:700;font-size:24px;border:none;border-radius:18px;cursor:pointer;padding:20px 38px;color:#fff;transition:.12s ease;-webkit-tap-highlight-color:transparent}
 .btn:active{transform:scale(.96)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
-.btn-primary{background:linear-gradient(180deg,#2FBF74,var(--green-dark));box-shadow:0 8px 18px rgba(30,158,90,.32)}
-.btn-turq{background:linear-gradient(180deg,#22CCC6,var(--turq-dark));box-shadow:0 8px 18px rgba(11,181,176,.32)}
-.btn-secondary{background:#E3F1EB;color:var(--ink);box-shadow:none}
+.btn-primary{background:linear-gradient(180deg,var(--red),var(--red-dark));box-shadow:0 8px 18px rgba(20,140,85,.3)}
+.btn-primary:hover:not(:disabled){filter:brightness(1.08)}
 .btn-block{width:100%}
-.home-columns{display:flex;align-items:stretch;margin-top:6px}
-.home-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:18px;padding:6px 26px}
-.home-col-head{display:flex;align-items:center;gap:16px}
-.home-col-head .emoji{font-size:42px}
-.ct{font-family:'Baloo 2';font-weight:700;font-size:25px}
-.cs{color:var(--muted);font-size:15px;font-weight:600}
+.btn-secondary{background:#DDEBE6;color:var(--ink);box-shadow:none}
+.home-columns{display:flex;align-items:stretch;margin-top:10px}
+.home-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:22px;padding:6px 28px}
+.home-col-head{display:flex;align-items:center;gap:18px}
+.home-col-head .emoji{font-size:44px}
+.ct{font-family:'Baloo 2';font-weight:700;font-size:26px}
+.cs{color:var(--muted);font-size:16px;font-weight:600}
 .home-divider{flex-shrink:0;width:2px;align-self:stretch;background:var(--line);position:relative}
-.home-divider span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#EAFBF3;color:var(--muted);font-weight:800;font-size:14px;text-transform:uppercase;padding:10px 6px;border-radius:10px;border:1px solid var(--line)}
-.form-panel{width:100%;display:flex;flex-direction:column;gap:16px}
-.field label{display:block;font-size:15px;font-weight:800;color:var(--muted);margin-bottom:6px}
-.field input{width:100%;padding:16px 18px;border-radius:14px;border:2px solid rgba(20,90,65,.2);background:#fff;color:var(--ink);font-size:22px;font-weight:700;font-family:'Nunito'}
+.home-divider span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#F2FBF1;color:var(--muted);font-weight:800;font-size:15px;text-transform:uppercase;padding:10px 6px;border-radius:10px;border:1px solid var(--line)}
+.form-panel{width:100%;display:flex;flex-direction:column;gap:18px}
+.field label{display:block;font-size:16px;font-weight:800;color:var(--muted);margin-bottom:8px}
+.field input{width:100%;padding:18px 20px;border-radius:14px;border:2px solid rgba(15,70,55,.18);background:#fff;color:var(--ink);font-size:23px;font-weight:700;font-family:'Nunito'}
 .field input:focus{outline:none;border-color:var(--turq)}
 .field input.code-input{letter-spacing:14px;text-align:center;font-family:'Baloo 2';font-size:34px}
-.error-msg{color:#8A1620;background:#FFE3E5;border:1px solid #F3A5AB;padding:12px 16px;border-radius:12px;font-weight:700;font-size:17px;display:none}
-@media(max-width:860px){.home-columns{flex-direction:column}.home-divider{width:auto;height:2px;margin:10px 0}#topbar{padding:8px 14px}.card{padding:30px 22px}.brand-text .sub{display:none}}
-.lobby-code{text-align:center;margin-bottom:22px}
-.lobby-code .cap{font-size:15px;letter-spacing:1px;color:var(--muted);font-weight:800}
-.lobby-code .val{font-family:'Baloo 2';font-size:clamp(56px,12vw,92px);font-weight:800;color:var(--gold);letter-spacing:18px;line-height:1.1}
-.lobby-count{text-align:center;color:var(--muted);font-weight:800;font-size:18px;margin-bottom:16px}
-.player-chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:860px;margin:0 auto 14px;max-height:300px;overflow:auto;padding:4px}
-.chip{background:#fff;border:2px solid var(--line);border-radius:30px;padding:10px 22px;font-family:'Baloo 2';font-weight:700;font-size:20px;box-shadow:0 4px 10px rgba(20,100,80,.08);animation:chipIn .4s cubic-bezier(.34,1.56,.64,1)}
-.chip.me{border-color:var(--turq);background:#E3FAF8}
-@keyframes chipIn{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
-.lobby-empty-hint{color:var(--muted);font-weight:700;font-size:18px;text-align:center;padding:24px;border:2px dashed var(--line);border-radius:18px;width:100%;max-width:500px}
-.status-line{text-align:center;margin-top:16px;font-weight:800;color:var(--muted);font-size:19px;min-height:24px}
-.countdown-overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(236,255,244,.94);z-index:30;flex-direction:column;border-radius:28px}
+.error-msg{color:#8A1620;background:#FFE3E5;border:1px solid #F3A5AB;padding:14px 18px;border-radius:12px;font-weight:700;font-size:18px;display:none}
+@media(max-width:860px){.home-columns{flex-direction:column}.home-divider{width:auto;height:2px;margin:8px 0}#topbar{padding:10px 18px}}
+.lobby-code{text-align:center;margin-bottom:28px}
+.lobby-code .cap{font-size:16px;letter-spacing:2px;color:var(--muted);font-weight:800}
+.lobby-code .val{font-family:'Baloo 2';font-size:76px;font-weight:800;color:var(--gold);letter-spacing:20px}
+.lobby-count{text-align:center;color:var(--muted);font-weight:800;font-size:17px;margin-bottom:20px}
+.lobby-teams-wrap{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;max-width:820px;margin-bottom:10px}
+.team-slot{width:210px;min-height:150px;border-radius:20px;padding:20px 16px;background:#fff;border:2px solid var(--line);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 14px rgba(20,90,70,.08)}
+.team-slot.me{border-color:var(--turq)}
+.tname{font-family:'Baloo 2';font-size:22px;font-weight:700;word-break:break-word}
+.tstatus{font-size:15px;font-weight:800;padding:7px 16px;border-radius:20px}
+.tstatus.waiting{background:#E4EEEA;color:var(--muted)}
+.tstatus.ready{background:#DDF5E7;color:#177A42}
+.host-tag{font-size:14px;color:var(--gold);font-weight:800}
+.edit-name-btn{background:#E9F3EF;border:1px solid var(--line);border-radius:10px;width:32px;height:32px;cursor:pointer;color:var(--ink);font-size:15px;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0}
+.edit-name-btn.small{width:26px;height:26px;font-size:12px}
+.tname-row{display:flex;align-items:center;gap:8px;justify-content:center}
+.lobby-empty-hint{color:var(--muted);font-weight:700;font-size:18px;text-align:center;padding:26px;border:2px dashed var(--line);border-radius:18px;width:100%;max-width:500px}
+#lobby-ready-btn,#lobby-start-btn{margin-top:14px}
+.status-line{text-align:center;margin-top:24px;font-weight:800;color:var(--muted);font-size:20px;min-height:26px}
+.countdown-overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(242,251,241,.93);z-index:30;flex-direction:column;border-radius:28px}
 .countdown-overlay.active{display:flex}
-.countdown-num{font-family:'Baloo 2';font-weight:800;font-size:190px;color:var(--green);line-height:1;animation:cdPop .9s ease infinite}
-@keyframes cdPop{0%{transform:scale(1.35);opacity:.3}40%{transform:scale(1);opacity:1}100%{transform:scale(.95)}}
-.countdown-label{font-weight:800;color:var(--muted);letter-spacing:3px;font-size:22px}
-.meta-row{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%}
-.q-progress{font-weight:800;color:var(--muted);font-size:21px;white-space:nowrap}
-.pill{font-family:'Baloo 2';font-weight:700;font-size:20px;background:#D7F7F4;color:var(--turq-dark);padding:8px 22px;border-radius:26px;border:1px solid rgba(11,181,176,.4);white-space:nowrap}
-.pill.gold{background:#FFF1CC;color:#9A6400;border-color:rgba(229,154,0,.5)}
-.timer-wrap{position:relative;width:92px;height:92px;flex-shrink:0}
-.timer-wrap svg{transform:rotate(-90deg);width:92px;height:92px}
-.ring-bg{fill:none;stroke:rgba(20,90,65,.13);stroke-width:8}
-.ring-fg{fill:none;stroke:var(--green);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .2s linear}
-.ring-fg.warn{stroke:var(--wrong)}
-.tnum{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;font-size:32px}
-.tnum.warn{color:var(--wrong)}
-.question-card{width:100%;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:30px 36px;box-shadow:var(--shadow)}
-.q-text{font-family:'Baloo 2';font-weight:700;font-size:clamp(22px,2.6vw,38px);text-align:center;line-height:1.35;margin-bottom:26px}
-.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.opt-btn{position:relative;display:flex;align-items:center;gap:16px;background:#fff;border:3px solid var(--line);border-radius:20px;padding:18px 22px;cursor:pointer;text-align:left;transition:.12s ease;color:var(--ink);font-family:'Nunito';box-shadow:0 4px 10px rgba(20,100,80,.08)}
-.opt-btn.static{cursor:default}
-.opt-btn:nth-child(1){border-color:rgba(30,158,90,.55);background:#EDFBF2}.opt-btn:nth-child(2){border-color:rgba(11,181,176,.55);background:#E8FAF9}.opt-btn:nth-child(3){border-color:rgba(229,154,0,.6);background:#FFF8E3}.opt-btn:nth-child(4){border-color:rgba(47,143,224,.55);background:#EBF5FF}
-.opt-btn:hover:not(:disabled):not(.static){filter:brightness(.97);transform:translateY(-2px)}
-.opt-btn:disabled{cursor:default}
-.opt-badge{flex-shrink:0;width:50px;height:50px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;font-size:26px;color:#fff}
-.opt-btn:nth-child(1) .opt-badge{background:var(--green)}.opt-btn:nth-child(2) .opt-badge{background:var(--turq-dark)}.opt-btn:nth-child(3) .opt-badge{background:#D49000}.opt-btn:nth-child(4) .opt-badge{background:var(--blue)}
-.opt-text{font-size:23px;font-weight:700;line-height:1.25;flex:1}
-.opt-count{font-family:'Baloo 2';font-weight:800;font-size:18px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:12px;padding:2px 12px;color:var(--muted)}
-.opt-btn.picked{border-width:5px;transform:scale(1.02);box-shadow:0 0 0 5px rgba(11,181,176,.28)}
-.opt-btn.dim{opacity:.5}
-@keyframes cblink{0%,100%{background:#DDF7E8;border-color:var(--green)}50%{background:#9FE8BE;border-color:#1E9E5A}}
-.opt-btn.correct-flash{animation:cblink .6s ease-in-out 3;border-color:var(--green)!important;background:#C4EFD6!important;opacity:1}
-.opt-btn.correct-flash .opt-badge{background:var(--green)!important}
-.opt-btn.wrong-pick{border-color:var(--wrong)!important;background:#FFD6D9!important;opacity:1}
-.opt-btn.wrong-pick .opt-badge{background:var(--wrong)!important}
-.feedback{margin-top:20px;text-align:center;font-family:'Baloo 2';font-weight:800;font-size:30px;min-height:40px}
-.feedback.ok{color:var(--green-dark);animation:fbPop .5s cubic-bezier(.34,1.56,.64,1)}
-.feedback.no{color:#C23B33;animation:fbPop .5s cubic-bezier(.34,1.56,.64,1)}
-@keyframes fbPop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
-/* host game */
-#screen-hgame{justify-content:flex-start;align-items:stretch}
-.hg-shell{width:100%;max-width:1600px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:24px;align-items:start}
-.hg-main{display:flex;flex-direction:column;gap:18px;min-width:0}
-.host-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.lb-panel{background:var(--card);border:1px solid var(--line);border-top:6px solid var(--gold);border-radius:24px;box-shadow:var(--shadow);padding:20px;position:sticky;top:78px}
-.lb-panel h3{font-family:'Baloo 2';font-size:24px;margin:0 0 4px;color:var(--green-dark)}
-.lb-sub{font-size:14px;font-weight:700;color:var(--muted);margin-bottom:12px}
-.lb-list{display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 230px);overflow:auto;padding:2px}
-.lb-row{position:relative;display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 14px}
-.lb-row.me{border-color:var(--turq);background:#E6FAF8}
-.lb-row.r1{border-color:var(--gold);background:#FFF6D8}
-.lb-rank{font-family:'Baloo 2';font-weight:800;font-size:20px;width:34px;text-align:center;color:var(--muted)}
-.lb-name{flex:1;font-family:'Baloo 2';font-weight:700;font-size:20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lb-score{font-family:'Baloo 2';font-weight:800;font-size:24px;color:var(--gold)}
-.lb-gain{position:absolute;right:14px;top:-10px;background:var(--green);color:#fff;font-family:'Baloo 2';font-weight:800;font-size:15px;padding:0 10px;border-radius:10px;animation:gainPop .6s cubic-bezier(.34,1.56,.64,1)}
-@keyframes gainPop{from{opacity:0;transform:translateY(8px) scale(.5)}to{opacity:1;transform:none}}
-@media(max-width:1050px){.hg-shell{grid-template-columns:1fr}.lb-panel{position:static}.lb-list{max-height:420px}}
-/* player */
-#screen-pgame{justify-content:flex-start}
-.pg-shell{width:100%;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
-.mini-lb{width:100%;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:var(--shadow);display:none}
-.mini-lb.show{display:block}
-.mini-lb .lb-list{max-height:none}
-@media(max-width:700px){.options-grid{grid-template-columns:1fr}.question-card{padding:20px 16px}.opt-text{font-size:20px}.timer-wrap,.timer-wrap svg{width:74px;height:74px}.tnum{font-size:26px}.q-progress{font-size:17px}.feedback{font-size:24px}}
-/* result */
-.podium{display:flex;align-items:flex-end;justify-content:center;gap:14px;margin:18px 0 24px}
-.pod{display:flex;flex-direction:column;align-items:center;gap:6px;width:150px;animation:podUp .8s cubic-bezier(.34,1.56,.64,1) both}
-.pod .medal{font-size:46px}
-.pod .pn{font-family:'Baloo 2';font-weight:800;font-size:21px;text-align:center;word-break:break-word;line-height:1.1}
-.pod .ps{font-family:'Baloo 2';font-weight:800;font-size:22px;color:var(--gold)}
-.pod .bar{width:100%;border-radius:16px 16px 0 0;background:linear-gradient(180deg,var(--turq),var(--turq-dark))}
-.pod.p1 .bar{height:130px;background:linear-gradient(180deg,#FFD05A,#E59A00)}.pod.p2 .bar{height:90px}.pod.p3 .bar{height:60px;background:linear-gradient(180deg,#8BD450,#4AA21F)}
-.pod.p2{animation-delay:.2s}.pod.p3{animation-delay:.4s}.pod.p1{animation-delay:.0s}
-@keyframes podUp{from{opacity:0;transform:translateY(60px) scale(.6)}to{opacity:1;transform:none}}
-#champion-reveal{position:fixed;inset:0;z-index:800;display:none;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at 50% 40%,#F1FFD9,#C9F5EA);overflow:hidden}
+.countdown-num{font-family:'Baloo 2';font-weight:800;font-size:200px;color:var(--red);line-height:1}
+.countdown-label{font-weight:800;color:var(--muted);letter-spacing:3px;font-size:24px}
+.modal-overlay{position:fixed;inset:0;background:rgba(20,60,50,.35);z-index:600;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-overlay.active{display:flex}
+.modal-box{width:min(92vw,420px);background:#fff;border:1px solid var(--line);border-top:5px solid var(--turq);border-radius:22px;box-shadow:var(--shadow);padding:30px;display:flex;flex-direction:column;gap:18px}
+.modal-title{font-family:'Baloo 2';font-weight:700;font-size:22px;text-align:center}
+#name-edit-input{width:100%;padding:16px 18px;border-radius:12px;border:2px solid rgba(15,70,55,.18);background:#fff;color:var(--ink);font-size:20px;font-weight:700;font-family:'Nunito'}
+#name-edit-input:focus{outline:none;border-color:var(--turq)}
+.modal-actions{display:flex;gap:12px}
+.modal-actions .btn{flex:1;font-size:20px;padding:14px 20px}
+#champion-reveal{position:fixed;inset:0;z-index:800;display:none;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at 50% 40%,#F4FFE6,#C9F0DD);overflow:hidden}
 #champion-reveal.active{display:flex}
-.reveal-name{font-family:'Baloo 2';font-weight:800;font-size:clamp(34px,5.4vw,68px);text-align:center;padding:0 40px;color:var(--green-dark);animation:champPop .6s cubic-bezier(.34,1.56,.64,1) both}
+.reveal-logo-stage{display:flex;align-items:center;justify-content:center;position:absolute;inset:0}
+.reveal-logo-pop{width:min(38vw,260px);animation:revealLogoPop .62s cubic-bezier(.34,1.56,.64,1) both;filter:drop-shadow(0 16px 30px rgba(20,90,70,.4))}
+@keyframes revealLogoPop{0%{opacity:0;transform:scale(.3) rotate(-22deg)}55%{opacity:1;transform:scale(1.15) rotate(4deg)}100%{opacity:1;transform:scale(1)}}
+.confetti-layer{position:absolute;inset:0;pointer-events:none;z-index:1}
+.confetti-piece{position:absolute;top:-60px;opacity:.95;animation-name:confettiFall;animation-timing-function:linear;animation-fill-mode:forwards}
+@keyframes confettiFall{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--dx),115vh) rotate(var(--rot));opacity:.85}}
+.reveal-champion-name{font-family:'Baloo 2';font-weight:800;font-size:clamp(34px,5.4vw,68px);text-align:center;padding:0 40px;max-width:1100px;color:var(--red-dark);text-shadow:0 6px 18px rgba(255,255,255,.8);opacity:0;animation:champPop .6s cubic-bezier(.34,1.56,.64,1) forwards;z-index:2}
 @keyframes champPop{0%{opacity:0;transform:scale(.4) translateY(20px)}60%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
-/* intro */
-#screen-intro{overflow:hidden}
-.intro-welcome{display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px;padding:0 20px}
-.intro-logos{display:flex;gap:26px;align-items:center;justify-content:center}
-.intro-logo{width:clamp(90px,13vw,170px);height:auto;object-fit:contain;opacity:0;filter:drop-shadow(0 10px 20px rgba(20,100,80,.3));animation:iIn .6s ease .1s forwards,iOut .6s ease 4.2s forwards}
-.intro-title{font-family:'Baloo 2';font-weight:800;font-size:clamp(40px,7vw,92px);line-height:1.12;margin:0;background:linear-gradient(90deg,var(--green),#7BCB2F 30%,var(--turq) 65%,var(--green));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rain 4s linear infinite,pIn .7s cubic-bezier(.34,1.56,.64,1) both,iOut .6s ease 4.2s forwards}
+#screen-game{padding:18px 36px 30px;justify-content:flex-start}
+.game-shell{width:100%;max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:20px;height:100%;min-height:0}
+.meta-row{display:flex;align-items:center;justify-content:space-between;padding:0 8px;gap:20px}
+.q-progress{font-weight:800;color:var(--muted);font-size:22px;white-space:nowrap}
+.q-category{font-family:'Baloo 2';font-weight:700;font-size:22px;background:#D9F4F4;color:var(--turq-dark);padding:10px 26px;border-radius:26px;border:1px solid rgba(0,163,163,.4)}
+.timer-wrap{position:relative;width:104px;height:104px;flex-shrink:0}
+.timer-wrap svg{transform:rotate(-90deg);width:104px;height:104px}
+.ring-bg{fill:none;stroke:rgba(15,70,55,.12);stroke-width:8}
+.ring-fg{fill:none;stroke:var(--gold);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .1s linear}
+.ring-fg.warn{stroke:var(--wrong)}
+.tnum{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;font-size:34px}
+.scoreboard-strip{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+.score-chip{position:relative;display:flex;align-items:center;gap:16px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:14px 26px;box-shadow:0 4px 10px rgba(20,90,70,.08)}
+.score-chip.mine{border-color:var(--turq);background:#E6F8F8}
+.sc-name{font-family:'Baloo 2';font-weight:700;font-size:20px;color:var(--muted);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.score-chip.mine .sc-name{color:var(--ink)}
+.sc-score{font-family:'Baloo 2';font-weight:800;font-size:28px;color:var(--gold)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.12);box-shadow:0 0 0 6px rgba(31,157,85,.3);border-color:var(--green)}100%{transform:scale(1)}}
+.score-chip.score-bump{animation:bump .9s ease}
+.score-pop{position:absolute;top:-14px;right:10px;font-family:'Baloo 2';font-weight:800;font-size:24px;color:var(--green);pointer-events:none;animation:popf 1.1s ease forwards}
+@keyframes popf{0%{opacity:0;transform:translateY(6px) scale(.7)}25%{opacity:1;transform:translateY(-10px) scale(1.15)}100%{opacity:0;transform:translateY(-42px)}}
+.question-card{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:36px 50px;box-shadow:var(--shadow)}
+#q-figure{display:none;justify-content:center;margin-bottom:16px}
+#q-figure.show{display:flex}
+#q-figure svg{width:min(90%,440px);height:auto;background:#fff;border:1px solid var(--line);border-radius:16px;padding:8px;box-shadow:0 4px 10px rgba(20,90,70,.08)}
+.q-text{font-family:'Baloo 2';font-weight:700;font-size:clamp(24px,2.8vw,40px);text-align:center;line-height:1.35;margin-bottom:32px;white-space:pre-line}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.opt-btn{display:flex;align-items:center;gap:20px;background:#fff;border:3px solid var(--line);border-radius:22px;padding:24px 28px;cursor:pointer;text-align:left;transition:.12s ease;color:var(--ink);box-shadow:0 4px 10px rgba(20,90,70,.08)}
+.opt-btn:nth-child(1){border-color:rgba(31,157,85,.55);background:#EDFAF2}.opt-btn:nth-child(2){border-color:rgba(0,163,163,.55);background:#EAFAFA}.opt-btn:nth-child(3){border-color:rgba(230,170,0,.6);background:#FFF8E3}.opt-btn:nth-child(4){border-color:rgba(50,120,220,.55);background:#ECF3FF}
+.opt-btn:hover:not(:disabled){filter:brightness(.97);transform:translateY(-2px)}
+.opt-btn:disabled{cursor:default}
+.opt-badge{flex-shrink:0;width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;font-size:28px;color:#fff}
+.opt-btn:nth-child(1) .opt-badge{background:#1FA463}.opt-btn:nth-child(2) .opt-badge{background:var(--turq-dark)}.opt-btn:nth-child(3) .opt-badge{background:#D49A00}.opt-btn:nth-child(4) .opt-badge{background:#3A78D6}
+.opt-text{font-size:25px;font-weight:700;line-height:1.25}
+@keyframes cblink{0%,100%{background:#DDF5E7;border-color:var(--green)}50%{background:#A9E8C3;border-color:#1F9D55}}
+.opt-btn.correct-flash{animation:cblink .6s ease-in-out 3;border-color:var(--green)!important;background:#C4EFD6!important}
+.opt-btn.correct-flash .opt-badge{background:var(--green)!important}
+.opt-btn.wrong-pick{border-color:var(--wrong)!important;background:#FFD6D9!important}
+.opt-btn.wrong-pick .opt-badge{background:var(--wrong)!important}
+.result-trophy{font-size:110px;margin-bottom:10px}
+.result-list{display:flex;flex-direction:column;gap:14px;margin:26px auto 10px;max-width:600px;width:100%}
+.result-row{display:flex;align-items:center;gap:16px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:18px 26px}
+.result-row.top{border-color:var(--gold);background:#FFF6D8}
+.rr-rank{font-family:'Baloo 2';font-weight:800;color:var(--muted);width:36px;font-size:22px}
+.rr-name{font-family:'Baloo 2';font-weight:700;font-size:24px;flex:1;text-align:left;word-break:break-word}
+.rr-score{font-family:'Baloo 2';font-weight:800;font-size:30px;color:var(--gold)}
+@media(max-width:900px){.options-grid{grid-template-columns:1fr}.sc-name{max-width:90px}.question-card{padding:24px 20px}}
+#screen-intro{gap:22px;overflow:hidden}
+.intro-welcome{display:flex;flex-direction:column;align-items:center;text-align:center;gap:26px;padding:0 20px}
+.intro-logo{width:clamp(110px,15vw,190px);height:auto;object-fit:contain;opacity:0;filter:drop-shadow(0 10px 20px rgba(20,90,70,.3));animation:iIn .6s ease .1s forwards,iOut .6s ease 4.2s forwards}
+.intro-title{font-family:'Baloo 2';font-weight:800;font-size:clamp(42px,7vw,92px);line-height:1.15;margin:0;background:linear-gradient(90deg,var(--red),#8CC63F 35%,var(--turq) 65%,var(--red));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rain 4s linear infinite,pIn .7s cubic-bezier(.34,1.56,.64,1) both,iOut .6s ease 4.2s forwards}
 @keyframes rain{to{background-position:300% 50%}}
 @keyframes pIn{0%{opacity:0;transform:scale(.6) translateY(20px)}100%{opacity:1;transform:scale(1)}}
 @keyframes iOut{to{opacity:0;transform:scale(.94)}}
 @keyframes iIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.intro-sub{font-weight:800;font-size:clamp(20px,2.4vw,32px);color:var(--muted);opacity:0;animation:iIn .6s ease .5s forwards,iOut .6s ease 4.2s forwards;max-width:820px}
-@media(prefers-reduced-motion:reduce){.sci-sym,.bg-floater,.glow-orb{animation:none}}
+.intro-sub{font-weight:800;font-size:clamp(19px,2.2vw,30px);color:var(--muted);opacity:0;animation:iIn .6s ease .5s forwards,iOut .6s ease 4.2s forwards;max-width:820px}
 </style>
 </head>
 <body>
@@ -166,137 +167,109 @@ p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 30px;font
 <div id="bg-floaters"></div>
 <div id="app">
   <div id="topbar">
-    <img class="brand-icon" src="cagfen-logo.png" alt="" onerror="this.style.display='none'">
-    <div class="brand-text"><span class="club">FEN BİLGİSİ</span><span class="sub">YARIŞMASI</span></div>
+    <img class="brand-icon" src="cagfen-logo.png" alt="Logo">
+    <div class="brand-text"><span class="club">Fen Bilimleri</span><span class="sub">Bilgi Yarışması</span></div>
     <div class="spacer"></div>
     <div id="room-badge">ODA KODU <b id="room-badge-code">----</b></div>
     <button id="fs-btn" type="button" title="Tam ekran"><span id="fs-icon">⛶</span><span id="fs-label">Tam Ekran</span></button>
   </div>
 
-  <!-- GİRİŞ ANİMASYONU -->
   <div class="screen active" id="screen-intro">
     <div class="intro-welcome">
-      <div class="intro-logos">
-        <img class="intro-logo" src="cagfen-logo.png" alt="" onerror="this.style.display='none'">
-        <img class="intro-logo" src="bilgesoy-logo.png" alt="" onerror="this.style.display='none'">
-      </div>
-      <h1 class="intro-title">FEN BİLGİSİ<br>YARIŞMASI</h1>
+      <img class="intro-logo" src="cagfen-logo.png" alt="Logo">
+      <h1 class="intro-title">FEN BİLİMLERİ<br>YARIŞMASI</h1>
       <div class="intro-sub">Bilimi Keşfet, Doğayı Anla!</div>
     </div>
   </div>
 
-  <!-- ANA EKRAN -->
   <div class="screen" id="screen-home">
-    <div class="card" style="max-width:1100px;width:100%">
-      <h1 class="title">FEN BİLGİSİ YARIŞMASI 🔬</h1>
-      <p class="lead">Bilimi Keşfet, Doğayı Anla!</p>
+    <div class="card" style="max-width:1150px;width:100%">
+      <h1 class="title">Hazır mısınız? 🔬</h1>
+      <p class="lead">Sınıfını seç, kodu paylaş, aynı kodu girenler odaya katılsın!</p>
       <div class="home-columns">
         <div class="home-col">
-          <div class="home-col-head"><span class="emoji">🖥️</span><div><div class="ct">Yönetici</div><div class="cs">Odayı aç, kodu paylaş, yarışmayı yönet</div></div></div>
+          <div class="home-col-head"><span class="emoji">🛡️</span><div><div class="ct">Oda Oluştur</div><div class="cs">Yeni bir yarışma başlat</div></div></div>
           <div class="form-panel">
+            <div class="field"><label>Sınıfınızın adı</label><input type="text" id="create-name" maxlength="24" placeholder="Örn: 5-A Sınıfı"></div>
             <div class="error-msg" id="create-error"></div>
             <button class="btn btn-primary btn-block" id="create-submit">Oda Oluştur</button>
           </div>
         </div>
         <div class="home-divider"><span>veya</span></div>
         <div class="home-col">
-          <div class="home-col-head"><span class="emoji">🧑‍🔬</span><div><div class="ct">Oyuncu</div><div class="cs">Kodu gir, kendi adınla yarış</div></div></div>
+          <div class="home-col-head"><span class="emoji">🔑</span><div><div class="ct">Odaya Katıl</div><div class="cs">4 haneli kodla katıl</div></div></div>
           <div class="form-panel">
-            <div class="field"><label>Oda kodu (PIN)</label><input type="text" id="join-code" class="code-input" maxlength="4" placeholder="0000" inputmode="numeric"></div>
-            <div class="field"><label>Kullanıcı adın</label><input type="text" id="join-name" maxlength="20" placeholder="Örn: Elif"></div>
+            <div class="field"><label>Oda kodu</label><input type="text" id="join-code" class="code-input" maxlength="4" placeholder="0000" inputmode="numeric"></div>
+            <div class="field"><label>Sınıfınızın adı</label><input type="text" id="join-name" maxlength="24" placeholder="Örn: 5-B Sınıfı"></div>
             <div class="error-msg" id="join-error"></div>
-            <button class="btn btn-turq btn-block" id="join-submit">Yarışmaya Katıl</button>
+            <button class="btn btn-primary btn-block" id="join-submit">Odaya Katıl</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- YÖNETİCİ LOBİ -->
-  <div class="screen" id="screen-hlobby">
-    <div class="card" style="max-width:900px;width:100%;position:relative">
-      <div class="lobby-code"><div class="cap">ODA KODU — Oyuncular bu kodu girerek katılsın</div><div class="val" id="h-code-val">----</div></div>
-      <div class="lobby-count" id="h-count">0 oyuncu katıldı</div>
-      <div class="player-chips" id="h-chips"></div>
+  <div class="screen" id="screen-lobby">
+    <div class="card" style="max-width:720px;width:100%;position:relative">
+      <div class="lobby-code"><div class="cap">ODA KODU — Bu kodu tüm katılacak sınıflara söyleyin</div><div class="val" id="lobby-code-val">----</div></div>
+      <div class="lobby-count" id="lobby-count">0 sınıf katıldı</div>
+      <div class="lobby-teams-wrap" id="lobby-teams-wrap"></div>
       <div style="text-align:center">
-        <button class="btn btn-primary" id="h-start" disabled>Yarışmayı Başlat 🚀</button>
-        <div class="status-line" id="h-hint">En az 1 oyuncunun katılmasını bekleyin.</div>
+        <button class="btn btn-primary" id="lobby-ready-btn">Hazırız! ✅</button>
+        <button class="btn btn-primary" id="lobby-start-btn" style="display:none">Yarışmayı Başlat 🚀</button>
+        <div class="status-line" id="lobby-hint">Diğer sınıfların kod ile katılmasını bekleyin.</div>
       </div>
-      <div class="countdown-overlay" id="h-countdown"><div class="countdown-num" id="h-cd-num">3</div><div class="countdown-label">YARIŞMA BAŞLIYOR</div></div>
+      <div class="countdown-overlay" id="countdown-overlay"><div class="countdown-num" id="countdown-num">3</div><div class="countdown-label">YARIŞMA BAŞLIYOR</div></div>
     </div>
   </div>
 
-  <!-- OYUNCU LOBİ -->
-  <div class="screen" id="screen-plobby">
-    <div class="card" style="max-width:760px;width:100%;position:relative;text-align:center">
-      <h1 class="title" id="p-welcome">Hoş geldin!</h1>
-      <p class="lead">Yarışmanın başlamasını bekliyoruz…</p>
-      <div class="lobby-count" id="p-count">0 oyuncu</div>
-      <div class="player-chips" id="p-chips"></div>
-      <div class="countdown-overlay" id="p-countdown"><div class="countdown-num" id="p-cd-num">3</div><div class="countdown-label">YARIŞMA BAŞLIYOR</div></div>
-    </div>
-  </div>
-
-  <!-- YÖNETİCİ OYUN -->
-  <div class="screen" id="screen-hgame">
-    <div class="hg-shell">
-      <div class="hg-main">
-        <div class="meta-row">
-          <div class="q-progress" id="h-progress">Soru 1/40</div>
-          <div class="pill gold" id="h-answered">0/0 cevapladı</div>
-          <div class="timer-wrap"><svg viewBox="0 0 64 64"><circle class="ring-bg" cx="32" cy="32" r="27"></circle><circle class="ring-fg ring-js" cx="32" cy="32" r="27"></circle></svg><div class="tnum tnum-js">45</div></div>
-        </div>
-        <div class="question-card">
-          <div class="q-text" id="h-qtext"></div>
-          <div class="options-grid" id="h-options"></div>
-        </div>
-        <div class="host-actions">
-          <button class="btn btn-turq" id="h-skip">Soruyu Bitir ⏭</button>
-          <button class="btn btn-primary" id="h-next" style="display:none">Sonraki Soru ➡</button>
-        </div>
-      </div>
-      <aside class="lb-panel">
-        <h3>🏆 Canlı Liderlik Tablosu</h3>
-        <div class="lb-sub" id="h-lb-sub">0 oyuncu</div>
-        <div class="lb-list" id="h-lb"></div>
-      </aside>
-    </div>
-  </div>
-
-  <!-- OYUNCU OYUN -->
-  <div class="screen" id="screen-pgame">
-    <div class="pg-shell">
+  <div class="screen" id="screen-game">
+    <div class="game-shell">
       <div class="meta-row">
-        <div class="q-progress" id="p-progress">Soru 1/40</div>
-        <div class="pill gold" id="p-me">0 puan</div>
-        <div class="timer-wrap"><svg viewBox="0 0 64 64"><circle class="ring-bg" cx="32" cy="32" r="27"></circle><circle class="ring-fg ring-js" cx="32" cy="32" r="27"></circle></svg><div class="tnum tnum-js">45</div></div>
+        <div class="q-progress" id="q-progress">Soru 1/40</div>
+        <div class="q-category">Fen Bilimleri</div>
+        <div class="timer-wrap">
+          <svg viewBox="0 0 64 64"><circle class="ring-bg" cx="32" cy="32" r="27"></circle><circle class="ring-fg" id="ring-fg" cx="32" cy="32" r="27"></circle></svg>
+          <div class="tnum" id="timer-num">45</div>
+        </div>
       </div>
+      <div class="scoreboard-strip" id="scoreboard-strip"></div>
       <div class="question-card">
-        <div class="q-text" id="p-qtext"></div>
-        <div class="options-grid" id="p-options"></div>
-        <div class="feedback" id="p-feedback"></div>
-        <div class="status-line" id="p-status"></div>
+        <div id="q-figure"></div>
+        <div class="q-text" id="q-text">Soru yükleniyor...</div>
+        <div class="options-grid" id="options-grid"></div>
+        <div class="status-line" id="game-status-line"></div>
       </div>
-      <div class="mini-lb" id="p-minilb"><div class="lb-sub" style="font-size:16px">🏆 İlk 5</div><div class="lb-list" id="p-lb"></div></div>
     </div>
   </div>
 
-  <!-- SONUÇ -->
   <div class="screen" id="screen-result">
-    <div class="card" style="max-width:760px;width:100%;text-align:center">
-      <h1 class="title" id="r-headline">Yarışma Bitti!</h1>
-      <p class="lead" id="r-sub" style="margin-bottom:6px">Bilimi keşfettiniz, doğayı anladınız!</p>
-      <div class="podium" id="r-podium"></div>
-      <div class="lb-list" id="r-list" style="max-height:340px;text-align:left"></div>
-      <button class="btn btn-primary" id="r-new" style="margin-top:24px">Yeni Yarışma</button>
+    <div class="card" style="max-width:600px;width:100%;text-align:center">
+      <div class="result-trophy">🏆</div>
+      <h1 class="title" id="result-headline">Tebrikler!</h1>
+      <div class="result-list" id="result-list"></div>
+      <p class="lead" style="margin-top:8px">Bilim hepimizin! Harika bir yarışmaydı!</p>
+      <button class="btn btn-primary" id="result-newgame">Yeni Oyun</button>
     </div>
   </div>
 </div>
+
 <div id="champion-reveal"></div>
+
+<div class="modal-overlay" id="name-edit-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Sınıf adını düzenle</div>
+    <input type="text" id="name-edit-input" maxlength="24">
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="name-edit-cancel">Vazgeç</button>
+      <button class="btn btn-primary" id="name-edit-save">Kaydet</button>
+    </div>
+  </div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, update, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
+import { getDatabase, ref, set, get, push, onValue, update, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAGUwx1yYyfMf-CBrwxip0QwWAFh1q9_Nw",
@@ -311,515 +284,600 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 const $ = id => document.getElementById(id);
-const LOGOS = ["cagfen-logo.png", "bilgesoy-logo.png"];
-const QT = 45;                       // soru süresi (saniye)
-const LETTERS = ["A", "B", "C", "D"];
-const REVEAL_MS = 6500;              // cevap gösterim süresi
 
-// ===== SORULAR: [soru, doğru cevap, [3 yanlış seçenek]] =====
-// Seçenek sırası her soru için sabit (tohumlu) karıştırılır; herkes aynı sırayı görür.
-const RAW = [
-  ["Güneş'e en yakın gezegen hangisidir?", "Merkür", ["Venüs", "Dünya", "Mars"]],
-  ["Bitkilerin güneş ışığıyla kendi besinini üretmesi olayına ne denir?", "Fotosentez", ["Solunum", "Terleme", "Sindirim"]],
-  ["Suyun gaz hâlden sıvı hâle geçmesine ne ad verilir?", "Yoğuşma", ["Buharlaşma", "Erime", "Donma"]],
-  ["Aşağıdakilerden hangisi canlıların ortak özelliklerinden biri değildir?", "Paslanma", ["Beslenme", "Solunum", "Üreme"]],
-  ["Kuvvetin birimi aşağıdakilerden hangisidir?", "Newton", ["Joule", "Watt", "Kilogram"]],
-  ["Dünya'nın Güneş etrafındaki bir tur dönüşü yaklaşık ne kadar sürer?", "365 gün 6 saat", ["24 saat", "30 gün", "6 ay"]],
-  ["Aşağıdakilerden hangisi bir karışımdır?", "Tuzlu su", ["Saf su", "Demir", "Oksijen"]],
-  ["Sesin yayılabilmesi için aşağıdakilerden hangisi gereklidir?", "Maddesel ortam", ["Boşluk", "Karanlık", "Mıknatıs"]],
-  ["Mıknatıs aşağıdakilerden hangisini çeker?", "Demir çivi", ["Plastik kalem", "Cam bardak", "Tahta kaşık"]],
-  ["Aşağıdakilerden hangisi elektriği iyi iletir?", "Bakır tel", ["Plastik cetvel", "Kauçuk eldiven", "Tahta çubuk"]],
-  ["Ay, Dünya ile Güneş'in arasına girdiğinde hangi olay gerçekleşir?", "Güneş tutulması", ["Ay tutulması", "Mevsimlerin oluşması", "Gece ve gündüzün oluşması"]],
-  ["Mevsimlerin oluşmasının temel nedeni nedir?", "Dünya'nın eksen eğikliğiyle Güneş etrafında dolanması", ["Dünya'nın kendi çevresinde dönmesi", "Ay'ın Dünya etrafında dolanması", "Güneş'in kendi çevresinde dönmesi"]],
-  ["Bir besin zincirinde üretici konumunda hangisi bulunur?", "Yeşil bitkiler", ["Aslan", "Tavşan", "Kartal"]],
-  ["Vücudumuzda kanı pompalayarak dolaşımı sağlayan organ hangisidir?", "Kalp", ["Akciğer", "Mide", "Böbrek"]],
-  ["Solunum sisteminde gaz alışverişinin gerçekleştiği organ hangisidir?", "Akciğer", ["Mide", "Karaciğer", "Kalp"]],
-  ["Besinlerin sindirilmiş hâlde kana geçtiği (emildiği) organ hangisidir?", "İnce bağırsak", ["Yemek borusu", "Mide", "Kalın bağırsak"]],
-  ["Deniz seviyesinde saf suyun kaynama sıcaklığı kaç °C'dir?", "100 °C", ["50 °C", "90 °C", "150 °C"]],
-  ["Saf suyun donma sıcaklığı kaç °C'dir?", "0 °C", ["-10 °C", "4 °C", "100 °C"]],
-  ["Aşağıdakilerden hangisi yenilenebilir enerji kaynağıdır?", "Rüzgâr", ["Kömür", "Petrol", "Doğal gaz"]],
-  ["Aşağıdakilerden hangisi bir memeli hayvandır?", "Yunus", ["Köpekbalığı", "Penguen", "Timsah"]],
-  ["Bitkinin topraktan su ve mineral almasını sağlayan kısmı hangisidir?", "Kök", ["Yaprak", "Çiçek", "Meyve"]],
-  ["Bitkilerde üremeyi sağlayan kısım hangisidir?", "Çiçek", ["Kök", "Yaprak", "Gövde"]],
-  ["Aşağıdakilerden hangisi hız birimidir?", "km/saat", ["kg", "litre", "Newton"]],
-  ["Sürtünme kuvveti, hareket eden cisme nasıl etki eder?", "Harekete zıt yönde etki eder", ["Hareket yönünde etki eder", "Harekete dik yönde etki eder", "Hiçbir etkisi yoktur"]],
-  ["Cismin kütlesini ölçmek için hangi araç kullanılır?", "Terazi", ["Dinamometre", "Termometre", "Barometre"]],
-  ["Kuvveti ölçmek için kullanılan araç hangisidir?", "Dinamometre", ["Terazi", "Termometre", "Metre"]],
-  ["Aşağıdakilerden hangisi ısı yalıtımı için en uygun malzemedir?", "Strafor", ["Bakır levha", "Alüminyum folyo", "Demir tel"]],
-  ["Aşağıdakilerden hangisi kendi ışığını üreten bir ışık kaynağıdır?", "Güneş", ["Ay", "Ayna", "Dünya"]],
-  ["Gölgenin oluşması ışığın hangi özelliğiyle açıklanır?", "Doğrusal yayılmasıyla", ["Kırılmasıyla", "Yansımasıyla", "Renklere ayrılmasıyla"]],
-  ["Şimşek çaktıktan bir süre sonra gök gürültüsü duyulur. Bunun nedeni nedir?", "Işığın sesten çok daha hızlı yayılmasıdır", ["Sesin ışıktan daha hızlı yayılmasıdır", "Işık ve sesin aynı hızda yayılmasıdır", "Şimşeğin çok yakında çakmasıdır"]],
-  ["Basit bir elektrik devresinde elektrik enerjisini sağlayan eleman hangisidir?", "Pil", ["Ampul", "Anahtar", "Kablo"]],
-  ["Atmosferde en fazla bulunan gaz hangisidir?", "Azot", ["Oksijen", "Karbondioksit", "Hidrojen"]],
-  ["Canlıların solunum yapabilmesi için havadaki hangi gaz gereklidir?", "Oksijen", ["Azot", "Helyum", "Neon"]],
-  ["Volkandan yeryüzüne çıkan kızgın erimiş kayaç karışımına ne ad verilir?", "Lav", ["Kül", "Mermer", "Kum"]],
-  ["Depremleri kaydeden alet hangisidir?", "Sismograf", ["Barometre", "Termometre", "Anemometre"]],
-  ["\"Kızıl Gezegen\" olarak bilinen gezegen hangisidir?", "Mars", ["Venüs", "Jüpiter", "Satürn"]],
-  ["Halkalarıyla ünlü gezegen hangisidir?", "Satürn", ["Mars", "Merkür", "Dünya"]],
-  ["Güneş Sistemi'ndeki en büyük gezegen hangisidir?", "Jüpiter", ["Satürn", "Neptün", "Dünya"]],
-  ["Ölü canlı kalıntılarını ayrıştırarak doğaya kazandıran canlılar hangileridir?", "Bakteri ve mantarlar", ["Otçul hayvanlar", "Etçil hayvanlar", "Yeşil bitkiler"]],
-  ["Kâğıt, cam ve plastik atıklar için en doğru davranış hangisidir?", "Geri dönüşüme vermek", ["Doğaya atmak", "Yakmak", "Toprağa gömmek"]]
-];
-function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-const QUESTIONS = RAW.map((r, i) => {
-  const rnd = mulberry32(i * 7919 + 101);
-  const opts = [r[1], ...r[2]];
-  for (let k = opts.length - 1; k > 0; k--) { const j = Math.floor(rnd() * (k + 1)); [opts[k], opts[j]] = [opts[j], opts[k]]; }
-  return { question: r[0], options: opts, answer: LETTERS[opts.indexOf(r[1])] };
-});
-const TOTAL = QUESTIONS.length;
+// ===== LOGOLAR =====
+// Patlama, süzülen arka plan ve konfeti bu listeyi kullanır.
+// Dosya adları büyük/küçük harf ve uzantı birebir aynı olmalı.
+const LOGO_FILES = ["cagfen-logo.png", "bilgesoy-logo.png"];
 
-// ===== ARKA PLAN =====
-(function () {
-  const fx = $('bg-fx'), fl = $('bg-floaters');
+// ===== ARKA PLAN: FEN SEMBOLLERİ + PARILTILAR =====
+(function initSciBackground() {
+  const fx = $('bg-fx');
+  const colors = ['#00A3A3', '#1FA463', '#8CC63F', '#3A78D6', '#E8A400'];
   const rnd = (a, b) => a + Math.random() * (b - a);
-  const cols = ['#1E9E5A', '#0BB5B0', '#8BD450', '#2F8FE0'];
+
   for (let i = 0; i < 6; i++) {
-    const o = document.createElement('div'); o.className = 'glow-orb';
-    const s = rnd(180, 340); o.style.width = o.style.height = s + 'px';
-    o.style.left = rnd(-5, 90) + '%'; o.style.top = rnd(-5, 90) + '%';
-    o.style.background = cols[i % cols.length];
-    o.style.animationDuration = rnd(16, 28) + 's'; o.style.animationDelay = '-' + rnd(0, 20) + 's';
-    fx.appendChild(o);
+    const orb = document.createElement('div');
+    orb.className = 'glow-orb';
+    const size = rnd(180, 340);
+    orb.style.width = orb.style.height = size + 'px';
+    orb.style.left = rnd(-5, 90) + '%';
+    orb.style.top = rnd(-5, 90) + '%';
+    orb.style.background = colors[i % colors.length];
+    orb.style.animationDuration = rnd(16, 28) + 's';
+    orb.style.animationDelay = '-' + rnd(0, 20) + 's';
+    fx.appendChild(orb);
   }
-  const syms = ['🌿', '🔬', '🧪', '🌱', '⚛️', '🧬', '🔭', '💧', '🍃', '🪐'];
-  for (let i = 0; i < 16; i++) {
-    const s = document.createElement('div'); s.className = 'sci-sym'; s.textContent = syms[i % syms.length];
-    s.style.fontSize = rnd(28, 62) + 'px'; s.style.left = rnd(1, 95) + '%'; s.style.top = rnd(1, 92) + '%';
-    s.style.animationDuration = rnd(14, 30) + 's'; s.style.animationDelay = '-' + rnd(0, 20) + 's';
+
+  const symbols = ['⚛', '🧪', '🔬', '🌱', '🧬', '🌍', '⚡', '☀️'];
+  const count = 26;
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'math-sym';
+    s.textContent = symbols[i % symbols.length];
+    s.style.color = colors[Math.floor(Math.random() * colors.length)];
+    s.style.fontSize = rnd(30, 84) + 'px';
+    s.style.left = rnd(1, 96) + '%';
+    s.style.top = rnd(1, 94) + '%';
+    s.style.setProperty('--dx', rnd(-50, 50) + 'px');
+    s.style.setProperty('--dy', rnd(-70, 70) + 'px');
+    s.style.setProperty('--r0', rnd(-25, 25) + 'deg');
+    s.style.setProperty('--r1', rnd(-25, 25) + 'deg');
+    s.style.animationDuration = rnd(14, 30) + 's,' + rnd(2.8, 5) + 's';
+    s.style.animationDelay = '-' + rnd(0, 20) + 's,-' + rnd(0, 4) + 's';
     fx.appendChild(s);
-  }
-  for (let i = 0; i < 10; i++) {
-    const img = document.createElement('img'); img.src = LOGOS[i % LOGOS.length]; img.alt = ''; img.className = 'bg-floater';
-    img.style.width = rnd(60, 120) + 'px'; img.style.left = rnd(0, 94) + '%'; img.style.top = rnd(0, 92) + '%';
-    img.style.animationDuration = rnd(16, 34) + 's'; img.style.animationDelay = '-' + rnd(0, 20) + 's';
-    img.onerror = () => img.remove();
-    fl.appendChild(img);
   }
 })();
 
 // ===== TAM EKRAN =====
-(function () {
-  const btn = $('fs-btn'), icon = $('fs-icon'), label = $('fs-label'), root = document.documentElement;
-  if (!(root.requestFullscreen || root.webkitRequestFullscreen)) { btn.style.display = 'none'; return; }
+(function initFullscreen() {
+  const btn = $('fs-btn'), icon = $('fs-icon'), label = $('fs-label');
+  const root = document.documentElement;
+  const canFs = root.requestFullscreen || root.webkitRequestFullscreen;
+  if (!canFs) { btn.style.display = 'none'; return; }
   const isFs = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
-  const refresh = () => { icon.textContent = isFs() ? '🗗' : '⛶'; label.textContent = isFs() ? 'Tam Ekrandan Çık' : 'Tam Ekran'; };
-  btn.addEventListener('click', () => {
+  function refresh() {
+    icon.textContent = isFs() ? '🗗' : '⛶';
+    label.textContent = isFs() ? 'Tam Ekrandan Çık' : 'Tam Ekran';
+  }
+  btn.addEventListener('click', function () {
     try {
-      if (isFs()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-      else (root.requestFullscreen || root.webkitRequestFullscreen).call(root);
+      if (isFs()) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        (root.requestFullscreen || root.webkitRequestFullscreen).call(root);
+      }
     } catch (e) {}
   });
   document.addEventListener('fullscreenchange', refresh);
   document.addEventListener('webkitfullscreenchange', refresh);
 })();
 
-// ===== KONFETİ / PARÇACIK =====
-const EMO = ['🍃', '🌿', '🔬', '🧪', '⭐', '✨', '🌱', '💧', '⚛️'];
-const COLS = ['#1E9E5A', '#0BB5B0', '#8BD450', '#F0A800', '#3DA5F4', '#E8457A'];
-function makePiece() {
-  const r = Math.random(), el = document.createElement(r < .2 ? 'img' : 'div');
-  el.style.cssText = 'position:fixed;z-index:9999;pointer-events:none;left:0;top:0;';
-  if (r < .2) { el.src = LOGOS[Math.floor(Math.random() * LOGOS.length)]; el.style.width = '36px'; el.onerror = () => el.remove(); }
-  else if (r < .55) { el.textContent = EMO[Math.floor(Math.random() * EMO.length)]; el.style.fontSize = (18 + Math.random() * 16) + 'px'; }
-  else { el.style.width = (8 + Math.random() * 8) + 'px'; el.style.height = (12 + Math.random() * 10) + 'px'; el.style.background = COLS[Math.floor(Math.random() * COLS.length)]; el.style.borderRadius = Math.random() < .4 ? '50%' : '3px'; }
-  return el;
-}
-function burst(x, y, n) {
-  n = n || 36;
-  for (let i = 0; i < n; i++) {
-    const el = makePiece(); el.style.left = x + 'px'; el.style.top = y + 'px';
-    document.body.appendChild(el);
-    const a = Math.random() * Math.PI * 2, d = 120 + Math.random() * 280, dx = Math.cos(a) * d, dy = Math.sin(a) * d - 90, rot = Math.random() * 720 - 360;
-    el.animate([
-      { transform: 'translate(-50%,-50%) scale(.4) rotate(0)', opacity: 1 },
-      { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(1.1) rotate(${rot}deg)`, opacity: 1, offset: .55 },
-      { transform: `translate(calc(-50% + ${dx * 1.1}px),calc(-50% + ${dy + 240}px)) scale(.6) rotate(${rot * 1.5}deg)`, opacity: 0 }
-    ], { duration: 1200 + Math.random() * 800, easing: 'cubic-bezier(.2,.7,.3,1)' }).onfinish = () => el.remove();
+(function initBackgroundFloaters() {
+  const wrap = $('bg-floaters');
+  for (let i = 0; i < 12; i++) {
+    const img = document.createElement('img');
+    img.src = LOGO_FILES[i % LOGO_FILES.length]; img.alt = ""; img.className = 'bg-floater';
+    img.style.width = (60 + Math.random() * 70) + 'px';
+    img.style.left = (Math.random() * 94) + '%';
+    img.style.top = (Math.random() * 94) + '%';
+    img.style.animationDuration = (16 + Math.random() * 18) + 's';
+    img.style.animationDelay = '-' + (Math.random() * 20) + 's';
+    wrap.appendChild(img);
   }
-}
-function burstFromEl(el, n) { const r = el.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, n); }
-function confettiRain(n) {
-  n = n || 70;
-  for (let i = 0; i < n; i++) {
-    const el = makePiece(); el.style.left = (Math.random() * 100) + 'vw'; el.style.top = '-40px';
-    document.body.appendChild(el);
-    const dx = Math.random() * 200 - 100, rot = (Math.random() * 900 + 360) * (Math.random() < .5 ? -1 : 1);
-    el.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: `translate(${dx}px,115vh) rotate(${rot}deg)`, opacity: .9 }],
-      { duration: 2400 + Math.random() * 2200, delay: Math.random() * 1400, easing: 'linear', fill: 'backwards' }).onfinish = () => el.remove();
+})();
+
+function scatterLogosFrom(el) {
+  const r = el.getBoundingClientRect();
+  const layer = document.createElement('div');
+  layer.className = 'burst-layer';
+  document.body.appendChild(layer);
+  const count = Math.max(24, LOGO_FILES.length * 8);
+  for (let i = 0; i < count; i++) {
+    const img = document.createElement('img');
+    img.src = LOGO_FILES[i % LOGO_FILES.length]; img.alt = ""; img.className = 'burst-piece';
+    img.style.left = (r.left + r.width / 2) + 'px';
+    img.style.top = (r.top + r.height / 2) + 'px';
+    const a = Math.random() * Math.PI * 2, d = 260 + Math.random() * 380;
+    img.style.setProperty('--tx', Math.cos(a) * d + 'px');
+    img.style.setProperty('--ty', Math.sin(a) * d + 'px');
+    img.style.setProperty('--rot', (Math.random() * 1080 - 540) + 'deg');
+    img.style.animationDelay = (Math.random() * 0.12) + 's';
+    layer.appendChild(img);
   }
+  setTimeout(() => layer.remove(), 2000);
 }
 
-// ===== SESLER (daha belirgin ve neşeli) =====
-let actx = null;
-function ac() { if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === 'suspended') actx.resume(); return actx; }
-function note(f, d, type, delay, peak) {
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+function playTone(freq, dur, type, delay, peak) {
   try {
-    const c = ac(), o = c.createOscillator(), g = c.createGain(), t0 = c.currentTime + (delay || 0);
-    o.type = type || 'sine'; o.frequency.value = f;
-    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak || .3, t0 + .015); g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
-    o.connect(g).connect(c.destination); o.start(t0); o.stop(t0 + d + .05);
+    const c = getAudioCtx(), o = c.createOscillator(), g = c.createGain();
+    o.type = type || 'sine'; o.frequency.value = freq;
+    const t0 = c.currentTime + (delay || 0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(peak || 0.3, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g).connect(c.destination);
+    o.start(t0); o.stop(t0 + dur + 0.05);
   } catch (e) {}
 }
-function slide(f1, f2, d, type, delay, peak) {
+function playSlide(f1, f2, dur, delay, peak) {
   try {
-    const c = ac(), o = c.createOscillator(), g = c.createGain(), t0 = c.currentTime + (delay || 0);
-    o.type = type || 'triangle';
-    o.frequency.setValueAtTime(f1, t0); o.frequency.exponentialRampToValueAtTime(f2, t0 + d);
-    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak || .3, t0 + .02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
-    o.connect(g).connect(c.destination); o.start(t0); o.stop(t0 + d + .05);
+    const c = getAudioCtx(), o = c.createOscillator(), g = c.createGain();
+    o.type = 'sawtooth';
+    const t0 = c.currentTime + (delay || 0);
+    o.frequency.setValueAtTime(f1, t0);
+    o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(peak || 0.24, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g).connect(c.destination);
+    o.start(t0); o.stop(t0 + dur + 0.05);
   } catch (e) {}
 }
-function sndCorrect() {            // parlak yükselen arpej + pırıltı + final akoru
-  [523.25, 659.25, 783.99, 1046.5, 1318.5, 1567.98].forEach((f, i) => { note(f, .3, 'triangle', i * .075, .45); note(f * 2, .2, 'sine', i * .075, .16); });
-  [2093, 2637, 3136, 2637, 3136, 4186].forEach((f, i) => note(f, .14, 'sine', .5 + i * .05, .12));
-  [523.25, 659.25, 783.99, 1046.5].forEach(f => note(f, .8, 'triangle', .5, .26));
+function playCorrectSound() {
+  const n = [523.25, 659.25, 783.99, 1046.5, 1318.5], t = [0, .07, .14, .21, .30];
+  n.forEach((f, i) => { playTone(f, 0.24, 'triangle', t[i], 0.26); playTone(f * 2, 0.14, 'sine', t[i], 0.09); });
 }
-function sndWrong() {              // komik "ııı-ouu" — belirgin ama neşeli
-  slide(440, 294, .32, 'triangle', 0, .5); slide(370, 220, .34, 'triangle', .3, .5); slide(294, 130, .6, 'triangle', .62, .5);
-  slide(220, 440, .18, 'sine', 1.25, .28);
+function playWrongSound() { playSlide(380, 160, 0.32, 0, 0.24); playSlide(320, 130, 0.36, 0.24, 0.2); }
+function playVictorySound() { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => playTone(f, 0.24, 'triangle', i * 0.15, 0.22)); }
+
+let serverTimeOffset = 0;
+onValue(ref(db, ".info/serverTimeOffset"), s => { serverTimeOffset = s.val() || 0; });
+const getServerNow = () => Date.now() + serverTimeOffset;
+
+// ===== SORULAR (4 şıklı, 40 adet) =====
+// Şekilli soru eklemek için soruya "figure" alanı (SVG metni) ekleyebilirsin.
+const QUESTION_BANK = [
+  { question: "Güneş, gök cisimleri sınıflandırmasında aşağıdakilerden hangisidir?", options: ["Gezegen", "Yıldız", "Uydu", "Gök taşı"], answer: "B" },
+  { question: "Dünya'nın Güneş etrafında bir tam turu yaklaşık ne kadar sürer?", options: ["24 saat", "30 gün", "Yaklaşık 365 gün 6 saat", "Yaklaşık 12 saat"], answer: "C" },
+  { question: "Ay'ın evreleri neden oluşur?", options: ["Ay'ın Dünya'nın gölgesinde kalması", "Ay'ın kendi ışığını değiştirmesi", "Bulutların Ay'ı örtmesi", "Ay'ın aydınlık yüzünün Dünya'dan farklı kısımlarının görünmesi"], answer: "D" },
+  { question: "Aşağıdakilerden hangisi doğal bir ışık kaynağıdır?", options: ["Ay", "Ayna", "Güneş", "Gezegen"], answer: "C" },
+  { question: "Ses aşağıdaki ortamlardan hangisinde yayılamaz?", options: ["Boşluk", "Su", "Hava", "Demir"], answer: "A" },
+  { question: "Aşağıdakilerden hangisi saf maddedir?", options: ["Tuzlu su", "Altın", "Hava", "Çorba"], answer: "B" },
+  { question: "Deniz seviyesinde saf suyun kaynama sıcaklığı kaç °C'dir?", options: ["50", "90", "100", "120"], answer: "C" },
+  { question: "Bitkilerin güneş ışığı yardımıyla kendi besinini üretmesine ne ad verilir?", options: ["Solunum", "Fotosentez", "Boşaltım", "Terleme"], answer: "B" },
+  { question: "Aşağıdaki canlılardan hangisi omurgasızdır?", options: ["Kedi", "Balık", "Kurbağa", "Kelebek"], answer: "D" },
+  { question: "Kalbin vücuttaki temel görevi aşağıdakilerden hangisidir?", options: ["Besinleri sindirmek", "Kanı vücuda pompalamak", "Havayı temizlemek", "Atıkları süzmek"], answer: "B" },
+  { question: "Besinlerin mekanik sindirimi vücutta ilk olarak nerede başlar?", options: ["Mide", "İnce bağırsak", "Yemek borusu", "Ağız"], answer: "D" },
+  { question: "Aşağıdaki maddelerden hangisi mıknatıs tarafından çekilir?", options: ["Demir", "Plastik", "Cam", "Ahşap"], answer: "A" },
+  { question: "İki mıknatısın aynı kutupları birbirine yaklaştırıldığında ne olur?", options: ["Birbirini çeker", "Birbirini iter", "Birbirini etkilemez", "Birbirini yok eder"], answer: "B" },
+  { question: "Katı bir maddenin ısı alarak sıvı hâle geçmesine ne ad verilir?", options: ["Donma", "Erime", "Buharlaşma", "Yoğuşma"], answer: "B" },
+  { question: "Su buharının soğuyarak sıvı suya dönüşmesi olayına ne ad verilir?", options: ["Kaynama", "Süblimleşme", "Yoğuşma", "Donma"], answer: "C" },
+  { question: "Dünya'nın kendi ekseni etrafında dönmesinin sonucu aşağıdakilerden hangisidir?", options: ["Mevsimlerin oluşması", "Gece ile gündüzün oluşması", "Ay'ın evreleri", "Gelgit olayı"], answer: "B" },
+  { question: "Mevsimlerin oluşmasının temel nedeni aşağıdakilerden hangisidir?", options: ["Dünya'nın eksen eğikliği ve Güneş etrafında dolanması", "Dünya'nın kendi etrafında dönmesi", "Ay'ın Dünya etrafında dönmesi", "Güneş'in yer değiştirmesi"], answer: "A" },
+  { question: "Ses şiddetinin birimi aşağıdakilerden hangisidir?", options: ["Newton", "Desibel", "Watt", "Metre"], answer: "B" },
+  { question: "Kuvvetin ölçü birimi aşağıdakilerden hangisidir?", options: ["Joule", "Kilogram", "Newton", "Litre"], answer: "C" },
+  { question: "Aşağıdakilerden hangisi yenilenebilir enerji kaynağıdır?", options: ["Kömür", "Petrol", "Doğalgaz", "Rüzgâr"], answer: "D" },
+  { question: "Besin zincirinde ilk halkayı oluşturan, kendi besinini üreten canlılar hangileridir?", options: ["Aslan", "Bitkiler", "Tavşan", "Yırtıcı kuşlar"], answer: "B" },
+  { question: "Hücrenin yönetim merkezi olarak kabul edilen kısım hangisidir?", options: ["Çekirdek", "Hücre zarı", "Sitoplazma", "Koful"], answer: "A" },
+  { question: "Bitkilerde suyu ve mineralleri topraktan alan kısım hangisidir?", options: ["Yaprak", "Gövde", "Kök", "Çiçek"], answer: "C" },
+  { question: "Aşağıdakilerden hangisi bir karışımdır?", options: ["Şekerli su", "Demir", "Oksijen", "Saf su"], answer: "A" },
+  { question: "Havayı oluşturan gazlar arasında en fazla bulunan gaz hangisidir?", options: ["Oksijen", "Azot", "Karbondioksit", "Hidrojen"], answer: "B" },
+  { question: "Sürtünme kuvveti, cismin hareket yönüne göre nasıl etki eder?", options: ["Hareket yönünde", "Hareket yönüne zıt yönde", "Aşağı doğru", "Yukarı doğru"], answer: "B" },
+  { question: "Bir elektrik devresinde ampulün yanabilmesi için aşağıdakilerden hangisi gereklidir?", options: ["Yalnızca pil ve ampul", "Yalnızca kablo", "Pil, kablo ve ampulden oluşan kapalı devre", "Yalnızca anahtar"], answer: "C" },
+  { question: "Aşağıdaki maddelerden hangisi elektriği iyi iletir?", options: ["Plastik", "Kauçuk", "Ahşap", "Bakır"], answer: "D" },
+  { question: "Dünya'ya en yakın yıldız hangisidir?", options: ["Güneş", "Ay", "Sirius", "Mars"], answer: "A" },
+  { question: "Güneş Sistemi'nin en büyük gezegeni hangisidir?", options: ["Dünya", "Jüpiter", "Satürn", "Neptün"], answer: "B" },
+  { question: "Aşağıdakilerden hangisi tüm canlıların ortak özelliği değildir?", options: ["Beslenme", "Solunum", "Yer değiştirme", "Üreme"], answer: "C" },
+  { question: "Kütle ölçü birimi aşağıdakilerden hangisidir?", options: ["Litre", "Metre", "Kilogram", "Saniye"], answer: "C" },
+  { question: "Termometre ile aşağıdakilerden hangisi ölçülür?", options: ["Sıcaklık", "Kütle", "Hacim", "Zaman"], answer: "A" },
+  { question: "Suyun doğadaki döngüsünde olaylar hangi sırayla gerçekleşir?", options: ["Yağış, buharlaşma, yoğuşma", "Buharlaşma, yoğuşma, yağış", "Yoğuşma, yağış, buharlaşma", "Yağış, yoğuşma, buharlaşma"], answer: "B" },
+  { question: "Aşağıdakilerden hangisi kimyasal değişimdir?", options: ["Buzun erimesi", "Kağıdın yırtılması", "Demirin paslanması", "Suyun buharlaşması"], answer: "C" },
+  { question: "Bir böceğin kaç bacağı vardır?", options: ["4", "6", "8", "10"], answer: "B" },
+  { question: "Aşağıdakilerden hangisi bir gezegen değildir?", options: ["Mars", "Venüs", "Satürn", "Ay"], answer: "D" },
+  { question: "Işığın bir yüzeye çarparak geri dönmesi olayına ne ad verilir?", options: ["Kırılma", "Yansıma", "Soğurulma", "Yayılma"], answer: "B" },
+  { question: "İki kemiğin birleştiği ve hareketi sağlayan bölgeye ne ad verilir?", options: ["Kas", "Eklem", "Deri", "Damar"], answer: "B" },
+  { question: "Maddenin tüm özelliklerini taşıyan en küçük yapı taşı için kullanılan temel kavram hangisidir?", options: ["Atom", "Hücre", "Molekül", "Karışım"], answer: "A" }
+];
+
+const MIN_TEAMS = 2;
+const QUESTION_TIME = 45;
+const LETTERS = ["A", "B", "C", "D"];
+
+let currentRoomCode = null, myTeamId = null, myTeamName = "";
+let timerInterval = null, isAnsweredCurrentQ = false, currentTeamIds = [];
+
+const roomRef = path => ref(db, 'rooms/' + currentRoomCode + (path ? '/' + path : ''));
+
+const screens = { intro: $('screen-intro'), home: $('screen-home'), lobby: $('screen-lobby'), game: $('screen-game'), result: $('screen-result') };
+function showScreen(n) {
+  Object.keys(screens).forEach(s => screens[s].classList.remove('active'));
+  screens[n].classList.add('active');
 }
-function sndPop() { note(880, .09, 'sine', 0, .3); note(1320, .1, 'sine', .05, .22); }
-function sndTick() { note(1000, .05, 'square', 0, .07); }
-function sndBeep() { note(660, .18, 'square', 0, .16); }
-function sndGo() { note(988, .12, 'triangle', 0, .35); note(1319, .5, 'triangle', .1, .4); }
-function sndReveal() { note(784, .2, 'triangle', 0, .3); note(1047, .4, 'triangle', .14, .3); }
-function sndVictory() {
-  [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5, 1318.5, 1567.98].forEach((f, i) => { note(f, .3, 'triangle', i * .14, .4); note(f * 2, .2, 'sine', i * .14, .13); });
-  [523.25, 659.25, 783.99, 1046.5].forEach(f => note(f, 1.1, 'triangle', 1.2, .28));
-}
+setTimeout(() => showScreen('home'), 4800);
 
-// ===== ZAMAN =====
-let serverOffset = 0;
-onValue(ref(db, '.info/serverTimeOffset'), s => { serverOffset = s.val() || 0; });
-const serverNow = () => Date.now() + serverOffset;
-
-// ===== DURUM =====
-let role = null, code = null, pid = null, myName = '';
-let lastData = null, activeQ = -1, timerIv = null, remaining = QT, lastTick = -1;
-let answeredLocal = false, revealScheduled = -1, revealedQ = -1, feedbackQ = -1, nextTimeout = null;
-let cdRunning = false, resultShown = false;
-
-const roomRef = p => ref(db, 'rooms/' + code + (p ? '/' + p : ''));
-const screens = { intro: 'screen-intro', home: 'screen-home', hlobby: 'screen-hlobby', plobby: 'screen-plobby', hgame: 'screen-hgame', pgame: 'screen-pgame', result: 'screen-result' };
-function showScreen(n) { Object.values(screens).forEach(id => $(id).classList.remove('active')); $(screens[n]).classList.add('active'); }
-setTimeout(() => { if ($('screen-intro').classList.contains('active')) showScreen('home'); }, 4800);
-document.addEventListener('pointerdown', () => { try { ac(); } catch (e) {} }, { once: true });
-
-function playersArr(d) {
-  const p = d.players || {};
-  return Object.keys(p).map(id => ({ id, name: p[id].name, score: p[id].score || 0, answeredQ: p[id].answeredQ, answer: p[id].answer, answerTime: p[id].answerTime, lastGain: p[id].lastGain || 0, lastQ: p[id].lastQ }))
-    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name, 'tr'));
-}
-
-// ===== ODA OLUŞTUR / KATIL =====
 $('create-submit').addEventListener('click', async function () {
-  const err = $('create-error'); err.style.display = 'none';
-  this.disabled = true;
-  try {
-    let c = null;
-    for (let i = 0; i < 6; i++) {
-      const t = Math.floor(1000 + Math.random() * 9000).toString();
-      const s = await get(ref(db, 'rooms/' + t));
-      if (!s.exists()) { c = t; break; }
-    }
-    if (!c) throw new Error('kod');
-    code = c; role = 'host';
-    await set(roomRef(), { code, status: 'lobby', currentQ: 0, qStartTime: 0, total: TOTAL, createdAt: serverTimestamp() });
-    listen(); enterRoom('hlobby');
-  } catch (e) { err.textContent = 'Oda oluşturulamadı. İnternet bağlantısını ve Firebase kurallarını kontrol edin.'; err.style.display = 'block'; this.disabled = false; }
+  const name = $('create-name').value.trim();
+  const err = $('create-error');
+  if (!name) { err.textContent = "Lütfen bir sınıf adı girin."; err.style.display = "block"; return; }
+  myTeamName = name;
+  currentRoomCode = Math.floor(1000 + Math.random() * 9000).toString();
+  const newTeamRef = push(ref(db, 'rooms/' + currentRoomCode + '/teams'));
+  myTeamId = newTeamRef.key;
+  const initialData = { code: currentRoomCode, status: 'lobby', hostId: myTeamId, teams: {}, currentQ: 0, qStartTime: 0 };
+  initialData.teams[myTeamId] = { name: myTeamName, ready: false, score: 0, answer: "" };
+  await set(roomRef(), initialData);
+  setupLobbyListeners();
+  enterLobby();
 });
 
 $('join-submit').addEventListener('click', async function () {
-  const err = $('join-error'); err.style.display = 'none';
-  const c = $('join-code').value.trim(), name = $('join-name').value.trim();
-  if (c.length !== 4 || !name) { err.textContent = 'Lütfen 4 haneli kodu ve kullanıcı adını girin.'; err.style.display = 'block'; return; }
-  this.disabled = true;
-  try {
-    code = c;
-    const snap = await get(roomRef());
-    if (!snap.exists()) { err.textContent = 'Oda bulunamadı! Kodu kontrol edin.'; err.style.display = 'block'; this.disabled = false; return; }
-    const d = snap.val();
-    if (d.status !== 'lobby') { err.textContent = 'Yarışma zaten başladı, bu odaya katılamazsınız.'; err.style.display = 'block'; this.disabled = false; return; }
-    const taken = Object.values(d.players || {}).some(p => (p.name || '').toLocaleLowerCase('tr') === name.toLocaleLowerCase('tr'));
-    if (taken) { err.textContent = 'Bu kullanıcı adı alınmış, başka bir ad seçin.'; err.style.display = 'block'; this.disabled = false; return; }
-    myName = name; role = 'player';
-    pid = 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-    await set(ref(db, 'rooms/' + code + '/players/' + pid), { name, score: 0, answer: '', answeredQ: -1, answerTime: 0, lastGain: 0, lastQ: -1 });
-    $('p-welcome').textContent = 'Hoş geldin, ' + name + '!';
-    listen(); enterRoom('plobby'); sndPop();
-  } catch (e) { err.textContent = 'Bağlantı hatası. Lütfen tekrar deneyin.'; err.style.display = 'block'; this.disabled = false; }
+  const code = $('join-code').value.trim();
+  const name = $('join-name').value.trim();
+  const err = $('join-error');
+  if (code.length !== 4 || !name) { err.textContent = "Lütfen 4 haneli kod ve sınıf adını eksiksiz girin."; err.style.display = "block"; return; }
+  currentRoomCode = code;
+  const snap = await get(roomRef());
+  if (!snap.exists()) { err.textContent = "Oda bulunamadı! Kodu kontrol edin."; err.style.display = "block"; return; }
+  if (snap.val().status !== 'lobby') { err.textContent = "Yarışma zaten başladı, bu odaya katılamazsınız."; err.style.display = "block"; return; }
+  myTeamName = name;
+  const newTeamRef = push(ref(db, 'rooms/' + currentRoomCode + '/teams'));
+  myTeamId = newTeamRef.key;
+  await set(newTeamRef, { name: myTeamName, ready: false, score: 0, answer: "" });
+  setupLobbyListeners();
+  enterLobby();
 });
 
-function enterRoom(screen) {
-  showScreen(screen);
-  $('room-badge').style.display = 'flex'; $('room-badge-code').textContent = code; $('h-code-val').textContent = code;
+function openNameEditModal(cur) {
+  const input = $('name-edit-input');
+  input.value = cur || '';
+  $('name-edit-overlay').classList.add('active');
+  setTimeout(() => { input.focus(); input.select(); }, 50);
+}
+const closeNameEditModal = () => $('name-edit-overlay').classList.remove('active');
+function saveNameEdit() {
+  const val = $('name-edit-input').value.trim();
+  if (!val || !myTeamId) { closeNameEditModal(); return; }
+  myTeamName = val;
+  update(roomRef('teams/' + myTeamId), { name: val });
+  closeNameEditModal();
+}
+$('name-edit-cancel').addEventListener('click', closeNameEditModal);
+$('name-edit-save').addEventListener('click', saveNameEdit);
+$('name-edit-input').addEventListener('keydown', e => { if (e.key === 'Enter') saveNameEdit(); if (e.key === 'Escape') closeNameEditModal(); });
+$('name-edit-overlay').addEventListener('click', function (e) { if (e.target === this) closeNameEditModal(); });
+
+function makeEditBtn(name, small) {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'edit-name-btn' + (small ? ' small' : '');
+  b.innerHTML = '✏️';
+  b.title = 'Sınıf adını düzenle';
+  b.addEventListener('click', e => { e.stopPropagation(); openNameEditModal(name); });
+  return b;
 }
 
-function listen() {
-  onValue(roomRef(), snap => {
-    const d = snap.val(); if (!d) return;
-    lastData = d;
-    if (role === 'host') routeHost(d); else routePlayer(d);
+function enterLobby() {
+  showScreen('lobby');
+  $('room-badge').style.display = 'flex';
+  $('room-badge-code').textContent = currentRoomCode;
+  $('lobby-code-val').textContent = currentRoomCode;
+}
+
+function renderLobbyTeams(data) {
+  const wrap = $('lobby-teams-wrap');
+  wrap.innerHTML = '';
+  const teams = data.teams || {};
+  const ids = Object.keys(teams);
+  $('lobby-count').textContent = ids.length + ' sınıf katıldı';
+  if (!ids.length) {
+    const e = document.createElement('div');
+    e.className = 'lobby-empty-hint'; e.textContent = 'Henüz kimse katılmadı.';
+    wrap.appendChild(e);
+    return;
+  }
+  ids.forEach(id => {
+    const t = teams[id];
+    const slot = document.createElement('div');
+    slot.className = 'team-slot' + (id === myTeamId ? ' me' : '');
+    const row = document.createElement('div');
+    row.className = 'tname-row';
+    const nd = document.createElement('div');
+    nd.className = 'tname'; nd.textContent = t.name;
+    row.appendChild(nd);
+    if (id === myTeamId) row.appendChild(makeEditBtn(t.name, false));
+    slot.appendChild(row);
+    const st = document.createElement('div');
+    st.className = 'tstatus ' + (t.ready ? 'ready' : 'waiting');
+    st.textContent = t.ready ? 'HAZIR' : 'Bekleniyor';
+    slot.appendChild(st);
+    if (id === data.hostId) {
+      const h = document.createElement('div');
+      h.className = 'host-tag'; h.textContent = '👑 Kurucu';
+      slot.appendChild(h);
+    }
+    wrap.appendChild(slot);
   });
 }
 
-// ===== ORTAK: GERİ SAYIM =====
-function runCountdown(overlayId, numId) {
-  if (cdRunning) return; cdRunning = true;
-  const ov = $(overlayId), num = $(numId); ov.classList.add('active');
-  let n = 3; num.textContent = n; sndBeep();
-  const iv = setInterval(() => {
-    n--; if (n > 0) { num.textContent = n; sndBeep(); return; }
-    num.textContent = '🚀'; sndGo(); clearInterval(iv);
+function setupLobbyListeners() {
+  onValue(roomRef(), function (snap) {
+    const data = snap.val();
+    if (!data) return;
+    renderLobbyTeams(data);
+    const teams = data.teams || {};
+    const ids = Object.keys(teams);
+    const amIHost = (myTeamId === data.hostId);
+    const allReady = ids.length > 0 && ids.every(id => teams[id].ready);
+    const startBtn = $('lobby-start-btn'), readyBtn = $('lobby-ready-btn'), hint = $('lobby-hint');
+
+    if (amIHost) {
+      startBtn.style.display = 'inline-block';
+      startBtn.disabled = !(ids.length >= MIN_TEAMS && allReady && data.status === 'lobby');
+      if (data.status === 'lobby') {
+        if (ids.length < MIN_TEAMS) hint.textContent = 'Başlamak için en az ' + MIN_TEAMS + ' sınıf gerekiyor.';
+        else if (!allReady) hint.textContent = 'Tüm sınıfların hazır olmasını bekleyin.';
+        else hint.textContent = 'Hazırsınız! İstediğiniz zaman başlatabilirsiniz.';
+      }
+    } else {
+      startBtn.style.display = 'none';
+    }
+    if (teams[myTeamId] && teams[myTeamId].ready) readyBtn.disabled = true;
+    if (data.status === 'starting') startCountdown();
+    if (data.status === 'playing' && screens.lobby.classList.contains('active')) startGameScreen();
+  });
+}
+
+$('lobby-ready-btn').addEventListener('click', function () {
+  update(roomRef('teams/' + myTeamId), { ready: true });
+  this.disabled = true;
+});
+$('lobby-start-btn').addEventListener('click', function () {
+  update(roomRef(), { status: 'starting' });
+  startCountdown();
+});
+
+let countdownStarted = false;
+function startCountdown() {
+  if (countdownStarted) return;
+  countdownStarted = true;
+  const overlay = $('countdown-overlay'), numDiv = $('countdown-num');
+  overlay.classList.add('active');
+  let count = 3;
+  numDiv.textContent = count;
+  const iv = setInterval(function () {
+    count--;
+    if (count > 0) { numDiv.textContent = count; return; }
+    clearInterval(iv);
+    get(roomRef()).then(snap => {
+      const d = snap.val();
+      if (d && d.hostId === myTeamId) update(roomRef(), { status: 'playing', currentQ: 0, qStartTime: serverTimestamp() });
+    });
   }, 1000);
 }
 
-// ===== ORTAK: SORU ÇİZİMİ =====
-function buildQuestion(q, textId, gridId, clickable) {
-  const Q = QUESTIONS[q];
-  $(textId).textContent = Q.question;
-  const grid = $(gridId); grid.innerHTML = '';
-  Q.options.forEach((txt, i) => {
-    const L = LETTERS[i];
-    const b = document.createElement(clickable ? 'button' : 'div');
-    b.className = 'opt-btn' + (clickable ? '' : ' static'); b.dataset.letter = L;
-    b.innerHTML = '<div class="opt-badge"></div><div class="opt-text"></div>';
-    b.children[0].textContent = L; b.children[1].textContent = txt;
-    if (clickable) b.addEventListener('click', () => submitAnswer(L, b));
-    grid.appendChild(b);
+function startGameScreen() { showScreen('game'); setupGameListeners(); }
+
+let prevScores = {}, scoresInitialized = false;
+function renderScoreboard(data) {
+  const strip = $('scoreboard-strip');
+  strip.innerHTML = '';
+  const teams = data.teams || {};
+  const arr = Object.keys(teams).map(id => ({ id, name: teams[id].name, score: teams[id].score }));
+  arr.sort((a, b) => b.score - a.score);
+  if (!scoresInitialized) { arr.forEach(t => { prevScores[t.id] = t.score; }); scoresInitialized = true; }
+  arr.forEach(function (t) {
+    const chip = document.createElement('div');
+    chip.className = 'score-chip' + (t.id === myTeamId ? ' mine' : '');
+    const ns = document.createElement('span');
+    ns.className = 'sc-name'; ns.textContent = t.name;
+    const ss = document.createElement('span');
+    ss.className = 'sc-score'; ss.textContent = t.score;
+    chip.appendChild(ns);
+    if (t.id === myTeamId) chip.appendChild(makeEditBtn(t.name, true));
+    chip.appendChild(ss);
+    const prev = (typeof prevScores[t.id] === 'number') ? prevScores[t.id] : t.score;
+    const diff = t.score - prev;
+    if (diff > 0) {
+      const pop = document.createElement('div');
+      pop.className = 'score-pop'; pop.textContent = '+' + diff;
+      chip.appendChild(pop);
+      chip.classList.add('score-bump');
+      setTimeout(() => chip.classList.remove('score-bump'), 900);
+      setTimeout(() => pop.remove(), 1100);
+    }
+    prevScores[t.id] = t.score;
+    strip.appendChild(chip);
   });
 }
-function setTimerUI(rem) {
+
+function setupGameListeners() {
+  onValue(roomRef(), function (snap) {
+    const data = snap.val();
+    if (!data || data.status !== 'playing') {
+      if (data && data.status === 'finished') showResults(data);
+      return;
+    }
+    currentTeamIds = Object.keys(data.teams || {});
+    renderScoreboard(data);
+    const qIndex = data.currentQ;
+    if (qIndex >= QUESTION_BANK.length) {
+      if (data.hostId === myTeamId) update(roomRef(), { status: 'finished' });
+      return;
+    }
+    renderQuestion(qIndex, data);
+  });
+}
+
+let activeQIndex = -1;
+function renderQuestion(qIndex, data) {
+  const question = QUESTION_BANK[qIndex];
+  if (activeQIndex !== qIndex) {
+    activeQIndex = qIndex;
+    isAnsweredCurrentQ = false;
+    $('q-progress').textContent = "Soru " + (qIndex + 1) + "/" + QUESTION_BANK.length;
+    $('q-text').textContent = question.question;
+    $('game-status-line').textContent = "";
+
+    const fig = $('q-figure');
+    if (question.figure) { fig.innerHTML = question.figure; fig.classList.add('show'); }
+    else { fig.innerHTML = ''; fig.classList.remove('show'); }
+
+    const grid = $('options-grid');
+    grid.innerHTML = "";
+    question.options.forEach(function (text, i) {
+      const letter = LETTERS[i];
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.dataset.letter = letter;
+      const badge = document.createElement('div');
+      badge.className = 'opt-badge'; badge.textContent = letter;
+      const tx = document.createElement('div');
+      tx.className = 'opt-text'; tx.textContent = text;
+      btn.appendChild(badge); btn.appendChild(tx);
+      btn.addEventListener('click', function () {
+        if (isAnsweredCurrentQ) return;
+        scatterLogosFrom(btn);
+        sendAnswer(letter, question.answer);
+      });
+      grid.appendChild(btn);
+    });
+    startTimer(data.qStartTime);
+  }
+
+  const myData = data.teams[myTeamId];
+  if (myData && myData.answer && myData.answer !== "" && !isAnsweredCurrentQ) {
+    isAnsweredCurrentQ = true;
+    showAnswerFeedback(myData.answer, question.answer);
+  }
+
+  const allAnswered = currentTeamIds.every(id => data.teams[id].answer && data.teams[id].answer !== "");
+  if (allAnswered && data.hostId === myTeamId) {
+    setTimeout(() => advanceToNextQuestion(qIndex), 1500);
+  }
+}
+
+function startTimer(qStartTime) {
+  clearInterval(timerInterval);
+  const timerNum = $('timer-num'), ringFg = $('ring-fg');
   const max = 170;
-  document.querySelectorAll('.tnum-js').forEach(e => { e.textContent = rem; e.classList.toggle('warn', rem <= 5); });
-  document.querySelectorAll('.ring-js').forEach(e => { e.style.strokeDasharray = max; e.style.strokeDashoffset = max - (rem / QT) * max; e.classList.toggle('warn', rem <= 5); });
-}
-function startQuestionTimer(start) {
-  clearInterval(timerIv); lastTick = -1;
-  const tick = () => {
-    const elapsed = (serverNow() - start) / 1000;
-    remaining = Math.max(0, Math.min(QT, Math.ceil(QT - elapsed)));
-    setTimerUI(remaining);
-    if (remaining <= 5 && remaining > 0 && remaining !== lastTick) { lastTick = remaining; sndTick(); }
+  timerInterval = setInterval(function () {
+    const elapsed = Math.floor((getServerNow() - qStartTime) / 1000);
+    const remaining = Math.max(0, QUESTION_TIME - elapsed);
+    timerNum.textContent = remaining;
+    ringFg.style.strokeDasharray = max;
+    ringFg.style.strokeDashoffset = max - (remaining / QUESTION_TIME) * max;
+    ringFg.classList.toggle('warn', remaining <= 5);
     if (remaining <= 0) {
-      clearInterval(timerIv);
-      if (role === 'player') { lockOptions(); if (!answeredLocal) $('p-status').textContent = '⏰ Süre doldu!'; }
-      else if (lastData && lastData.status === 'playing') scheduleReveal(lastData.currentQ, 700);
+      clearInterval(timerInterval);
+      disableOptions();
+      get(roomRef()).then(snap => {
+        const d = snap.val();
+        if (d && d.hostId === myTeamId) advanceToNextQuestion(activeQIndex);
+      });
     }
-  };
-  tick(); timerIv = setInterval(tick, 200);
+  }, 200);
 }
-function lockOptions() { document.querySelectorAll('#p-options .opt-btn').forEach(b => { b.disabled = true; }); }
 
-function ensureQuestion(d) {
-  const q = d.currentQ;
-  if (activeQ === q) return false;
-  activeQ = q;
-  if (role === 'host') {
-    buildQuestion(q, 'h-qtext', 'h-options', false);
-    $('h-progress').textContent = 'Soru ' + (q + 1) + '/' + TOTAL;
-  } else {
-    const me = (d.players || {})[pid] || {};
-    answeredLocal = me.answeredQ === q;
-    buildQuestion(q, 'p-qtext', 'p-options', true);
-    $('p-progress').textContent = 'Soru ' + (q + 1) + '/' + TOTAL;
-    $('p-feedback').textContent = ''; $('p-feedback').className = 'feedback'; $('p-status').textContent = '';
-    $('p-minilb').classList.remove('show');
-    if (answeredLocal) {
-      const b = document.querySelector('#p-options .opt-btn[data-letter="' + me.answer + '"]'); if (b) b.classList.add('picked');
-      lockOptions(); $('p-status').textContent = 'Cevabın alındı! Sonuç bekleniyor…';
-    }
+function sendAnswer(picked, correct) {
+  if (isAnsweredCurrentQ) return;
+  isAnsweredCurrentQ = true;
+  showAnswerFeedback(picked, correct);
+  const isCorrect = picked === correct;
+  get(roomRef('teams/' + myTeamId)).then(function (snap) {
+    const val = snap.val();
+    const cur = (val && val.score) || 0;
+    update(roomRef('teams/' + myTeamId), { answer: picked, score: isCorrect ? cur + 10 : cur });
+  });
+  $('game-status-line').textContent = "Cevabınız iletildi, diğer sınıflar/süre bekleniyor...";
+}
+
+function showAnswerFeedback(picked, correct) {
+  disableOptions();
+  if (picked === correct) playCorrectSound(); else playWrongSound();
+  document.querySelectorAll('.opt-btn').forEach(function (b) {
+    if (b.dataset.letter === correct) b.classList.add('correct-flash');
+    if (b.dataset.letter === picked && picked !== correct) b.classList.add('wrong-pick');
+  });
+}
+function disableOptions() { document.querySelectorAll('.opt-btn').forEach(b => { b.disabled = true; }); }
+
+function advanceToNextQuestion(idx) {
+  const updates = { currentQ: idx + 1, qStartTime: serverTimestamp() };
+  currentTeamIds.forEach(id => { updates['teams/' + id + '/answer'] = ""; });
+  update(roomRef(), updates);
+}
+
+function startConfettiRain(container) {
+  const layer = document.createElement('div');
+  layer.className = 'confetti-layer';
+  container.appendChild(layer);
+  for (let i = 0; i < 46; i++) {
+    const img = document.createElement('img');
+    img.src = LOGO_FILES[i % LOGO_FILES.length]; img.alt = ""; img.className = 'confetti-piece';
+    img.style.width = (20 + Math.random() * 26) + 'px';
+    img.style.left = (Math.random() * 100) + '%';
+    img.style.setProperty('--dx', (Math.random() * 160 - 80) + 'px');
+    img.style.setProperty('--rot', ((Math.random() * 900 + 360) * (Math.random() < 0.5 ? -1 : 1)) + 'deg');
+    img.style.animationDuration = (2.2 + Math.random() * 1.6) + 's';
+    img.style.animationDelay = (Math.random() * 1.1) + 's';
+    layer.appendChild(img);
   }
-  return true;
+  setTimeout(() => layer.remove(), 4200);
 }
 
-// ===== YÖNETİCİ =====
-function renderChips(el, arr, meId) {
-  el.innerHTML = '';
-  if (!arr.length) { const e = document.createElement('div'); e.className = 'lobby-empty-hint'; e.textContent = 'Henüz kimse katılmadı.'; el.appendChild(e); return; }
-  arr.forEach(p => { const c = document.createElement('div'); c.className = 'chip' + (p.id === meId ? ' me' : ''); c.textContent = p.name; el.appendChild(c); });
-}
-function renderLB(el, arr, opts) {
-  opts = opts || {};
-  const old = {}; el.querySelectorAll('.lb-row').forEach(r => { old[r.dataset.id] = r.getBoundingClientRect().top; });
-  el.innerHTML = '';
-  const list = opts.limit ? arr.slice(0, opts.limit) : arr;
-  list.forEach((p, i) => {
-    const row = document.createElement('div');
-    row.className = 'lb-row' + (p.id === pid ? ' me' : '') + (i === 0 && p.score > 0 ? ' r1' : '');
-    row.dataset.id = p.id;
-    const rk = document.createElement('div'); rk.className = 'lb-rank'; rk.textContent = ['🥇', '🥈', '🥉'][i] && p.score > 0 ? ['🥇', '🥈', '🥉'][i] : (i + 1);
-    const nm = document.createElement('div'); nm.className = 'lb-name'; nm.textContent = p.name;
-    const sc = document.createElement('div'); sc.className = 'lb-score'; sc.textContent = p.score;
-    row.appendChild(rk); row.appendChild(nm); row.appendChild(sc);
-    if (opts.showGain && p.lastQ === opts.q && p.lastGain > 0) { const g = document.createElement('div'); g.className = 'lb-gain'; g.textContent = '+' + p.lastGain; row.appendChild(g); }
-    el.appendChild(row);
+function runChampionReveal(text) {
+  const overlay = $('champion-reveal');
+  overlay.innerHTML = '';
+  overlay.classList.add('active');
+  const stage = document.createElement('div');
+  stage.className = 'reveal-logo-stage';
+  overlay.appendChild(stage);
+  const seq = LOGO_FILES.slice().reverse(), per = 620;
+  seq.forEach(function (src, i) {
+    setTimeout(function () {
+      stage.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = src; img.alt = ""; img.className = 'reveal-logo-pop';
+      stage.appendChild(img);
+    }, i * per);
   });
-  el.querySelectorAll('.lb-row').forEach(r => {
-    const o = old[r.dataset.id]; if (o == null) return;
-    const dy = o - r.getBoundingClientRect().top;
-    if (dy) r.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 500, easing: 'ease' });
-  });
+  const after = seq.length * per + 150;
+  setTimeout(function () {
+    stage.remove();
+    startConfettiRain(overlay);
+    const el = document.createElement('div');
+    el.className = 'reveal-champion-name'; el.textContent = text;
+    overlay.appendChild(el);
+    playVictorySound();
+  }, after);
+  setTimeout(() => overlay.classList.remove('active'), after + 3600);
 }
 
-function routeHost(d) {
-  const arr = playersArr(d);
-  if (d.status === 'lobby') {
-    showScreen('hlobby');
-    $('h-count').textContent = arr.length + ' oyuncu katıldı';
-    renderChips($('h-chips'), arr, null);
-    $('h-start').disabled = arr.length < 1;
-    $('h-hint').textContent = arr.length < 1 ? 'En az 1 oyuncunun katılmasını bekleyin.' : 'Hazırsanız yarışmayı başlatabilirsiniz.';
-  } else if (d.status === 'starting') {
-    showScreen('hlobby'); runCountdown('h-countdown', 'h-cd-num');
-  } else if (d.status === 'playing' || d.status === 'reveal') {
-    showScreen('hgame');
-    const fresh = ensureQuestion(d); const q = d.currentQ;
-    $('h-lb-sub').textContent = arr.length + ' oyuncu · puanlar anlık güncellenir';
-    renderLB($('h-lb'), arr, { showGain: d.status === 'reveal', q });
-    const answered = arr.filter(p => p.answeredQ === q).length;
-    $('h-answered').textContent = answered + '/' + arr.length + ' cevapladı';
-    if (d.status === 'playing') {
-      if (fresh) { startQuestionTimer(d.qStartTime); }
-      $('h-skip').style.display = ''; $('h-next').style.display = 'none';
-      if (arr.length && answered === arr.length) scheduleReveal(q, 0);
-    } else {
-      $('h-skip').style.display = 'none'; $('h-next').style.display = '';
-      $('h-next').textContent = q + 1 >= TOTAL ? 'Sonuçları Göster 🏆' : 'Sonraki Soru ➡';
-      applyHostReveal(d, arr);
-    }
-  } else if (d.status === 'finished') { showResult(d); }
-}
-
-function applyHostReveal(d, arr) {
-  const q = d.currentQ, corr = QUESTIONS[q].answer;
-  if (feedbackQ === q) return; feedbackQ = q;
-  clearInterval(timerIv);
-  document.querySelectorAll('#h-options .opt-btn').forEach(b => {
-    const L = b.dataset.letter; const n = arr.filter(p => p.answeredQ === q && p.answer === L).length;
-    if (L === corr) b.classList.add('correct-flash'); else b.classList.add('dim');
-    const c = document.createElement('span'); c.className = 'opt-count'; c.textContent = n + ' kişi'; b.appendChild(c);
-  });
-  sndReveal(); const el = document.querySelector('#h-options .correct-flash'); if (el) burstFromEl(el, 30);
-}
-
-function scheduleReveal(q, delay) {
-  if (role !== 'host' || revealScheduled === q) return;
-  revealScheduled = q;
-  setTimeout(() => hostReveal(q), delay);
-}
-function hostReveal(q) {
-  const d = lastData;
-  if (!d || d.status !== 'playing' || d.currentQ !== q || revealedQ === q) return;
-  revealedQ = q; clearInterval(timerIv);
-  const corr = QUESTIONS[q].answer, upd = { status: 'reveal', revealAt: serverTimestamp() };
-  Object.entries(d.players || {}).forEach(([id, p]) => {
-    let gain = 0;
-    if (p.answeredQ === q && p.answer === corr) gain = 100 + Math.round(100 * Math.max(0, 1 - (p.answerTime || 0) / (QT * 1000)));
-    upd['players/' + id + '/score'] = (p.score || 0) + gain;
-    upd['players/' + id + '/lastGain'] = gain;
-    upd['players/' + id + '/lastQ'] = q;
-  });
-  update(roomRef(), upd);
-  clearTimeout(nextTimeout); nextTimeout = setTimeout(hostNext, REVEAL_MS);
-}
-function hostNext() {
-  clearTimeout(nextTimeout);
-  const d = lastData; if (!d || d.status !== 'reveal') return;
-  if (d.currentQ + 1 >= TOTAL) update(roomRef(), { status: 'finished' });
-  else update(roomRef(), { status: 'playing', currentQ: d.currentQ + 1, qStartTime: serverTimestamp() });
-}
-$('h-skip').addEventListener('click', () => { if (lastData) { revealScheduled = lastData.currentQ; hostReveal(lastData.currentQ); } });
-$('h-next').addEventListener('click', hostNext);
-$('h-start').addEventListener('click', function () {
-  this.disabled = true;
-  update(roomRef(), { status: 'starting' });
-  setTimeout(() => update(roomRef(), { status: 'playing', currentQ: 0, qStartTime: serverTimestamp() }), 3600);
-});
-
-// ===== OYUNCU =====
-function routePlayer(d) {
-  const arr = playersArr(d), me = (d.players || {})[pid];
-  if (d.status === 'lobby') {
-    showScreen('plobby'); $('p-count').textContent = arr.length + ' oyuncu odada';
-    renderChips($('p-chips'), arr, pid);
-  } else if (d.status === 'starting') {
-    showScreen('plobby'); runCountdown('p-countdown', 'p-cd-num');
-  } else if (d.status === 'playing' || d.status === 'reveal') {
-    showScreen('pgame');
-    const fresh = ensureQuestion(d); const q = d.currentQ;
-    const rank = arr.findIndex(p => p.id === pid) + 1;
-    $('p-me').textContent = (me ? me.score || 0 : 0) + ' puan · ' + rank + '. sıra';
-    if (d.status === 'playing') { if (fresh) startQuestionTimer(d.qStartTime); }
-    else applyPlayerReveal(d, arr, me);
-  } else if (d.status === 'finished') { showResult(d); }
-}
-function submitAnswer(letter, btn) {
-  if (answeredLocal || remaining <= 0 || !lastData || lastData.status !== 'playing') return;
-  answeredLocal = true;
-  const q = lastData.currentQ;
-  const elapsed = Math.min(QT * 1000, Math.max(0, serverNow() - lastData.qStartTime));
-  btn.classList.add('picked'); lockOptions(); sndPop(); burstFromEl(btn, 28);
-  $('p-status').textContent = 'Cevabın alındı! Sonuç bekleniyor…';
-  update(ref(db, 'rooms/' + code + '/players/' + pid), { answer: letter, answeredQ: q, answerTime: elapsed });
-}
-function applyPlayerReveal(d, arr, me) {
-  const q = d.currentQ, corr = QUESTIONS[q].answer;
-  if (feedbackQ === q) return; feedbackQ = q;
-  clearInterval(timerIv); lockOptions();
-  const mine = me && me.answeredQ === q ? me.answer : '';
-  document.querySelectorAll('#p-options .opt-btn').forEach(b => {
-    b.classList.remove('picked');
-    if (b.dataset.letter === corr) b.classList.add('correct-flash');
-    else if (b.dataset.letter === mine) b.classList.add('wrong-pick');
-    else b.classList.add('dim');
-  });
-  const fb = $('p-feedback'); $('p-status').textContent = '';
-  if (mine === corr && mine) {
-    fb.textContent = '🎉 Doğru! +' + (me.lastGain || 0) + ' puan'; fb.className = 'feedback ok';
-    sndCorrect(); burst(innerWidth / 2, innerHeight / 2.4, 60);
-  } else if (mine) {
-    fb.textContent = '😅 Olmadı! Doğru cevap: ' + corr; fb.className = 'feedback no'; sndWrong();
-  } else {
-    fb.textContent = '⏰ Süre doldu! Doğru cevap: ' + corr; fb.className = 'feedback no'; sndWrong();
-  }
-  const mini = $('p-minilb'); mini.classList.add('show');
-  renderLB($('p-lb'), arr, { limit: 5, showGain: true, q });
-}
-
-// ===== SONUÇ =====
-function showResult(d) {
-  clearInterval(timerIv); clearTimeout(nextTimeout);
+let championRevealPlayed = false;
+function showResults(data) {
+  clearInterval(timerInterval);
   showScreen('result');
-  const arr = playersArr(d), maxScore = arr.length ? arr[0].score : 0;
-  const pod = $('r-podium'); pod.innerHTML = '';
-  const order = [1, 0, 2];
-  order.forEach(i => {
-    const p = arr[i]; if (!p) return;
-    const el = document.createElement('div'); el.className = 'pod p' + (i + 1);
-    el.innerHTML = '<div class="medal"></div><div class="pn"></div><div class="ps"></div><div class="bar"></div>';
-    el.children[0].textContent = ['🥇', '🥈', '🥉'][i]; el.children[1].textContent = p.name; el.children[2].textContent = p.score;
-    pod.appendChild(el);
+  const teams = data.teams || {};
+  const arr = Object.keys(teams).map(id => ({ name: teams[id].name, score: teams[id].score }));
+  arr.sort((a, b) => b.score - a.score);
+  const list = $('result-list');
+  list.innerHTML = '';
+  const maxScore = arr.length ? arr[0].score : 0;
+  arr.forEach(function (t, idx) {
+    const row = document.createElement('div');
+    row.className = 'result-row' + (t.score === maxScore ? ' top' : '');
+    const rank = document.createElement('span'); rank.className = 'rr-rank'; rank.textContent = (idx + 1) + '.';
+    const name = document.createElement('span'); name.className = 'rr-name'; name.textContent = t.name;
+    const score = document.createElement('span'); score.className = 'rr-score'; score.textContent = t.score;
+    row.appendChild(rank); row.appendChild(name); row.appendChild(score);
+    list.appendChild(row);
   });
-  renderLB($('r-list'), arr, {});
-  let headline;
-  const winners = arr.filter(p => p.score === maxScore);
-  if (!arr.length) headline = 'Yarışma Bitti!';
-  else if (winners.length === 1) headline = winners[0].name + ' Kazandı! 🎉';
-  else headline = winners.map(w => w.name).join(' ve ') + ' Berabere Kazandı! 🎉';
-  $('r-headline').textContent = headline;
-  if (role === 'player') { const r = arr.findIndex(p => p.id === pid) + 1; $('r-sub').textContent = 'Sıralaman: ' + r + '. · ' + (arr[r - 1] ? arr[r - 1].score : 0) + ' puan'; }
-  if (!resultShown) {
-    resultShown = true;
-    const ov = $('champion-reveal'); ov.innerHTML = ''; ov.classList.add('active');
-    const el = document.createElement('div'); el.className = 'reveal-name'; el.textContent = headline; ov.appendChild(el);
-    sndVictory(); confettiRain(90);
-    setTimeout(() => ov.classList.remove('active'), 4200);
-    setTimeout(() => confettiRain(60), 4300);
-  }
+  const winners = arr.filter(t => t.score === maxScore);
+  const headline = $('result-headline');
+  if (winners.length === arr.length && arr.length > 1) headline.textContent = "Dostluk Kazandı! Herkes Berabere! 🤝";
+  else if (winners.length === 1) headline.textContent = winners[0].name + " Kazandı! 🎉";
+  else headline.textContent = winners.map(w => w.name).join(' ve ') + " Berabere Kazandı! 🎉";
+  if (!championRevealPlayed) { championRevealPlayed = true; runChampionReveal(headline.textContent); }
 }
-$('r-new').addEventListener('click', () => window.location.reload());
+
+$('result-newgame').addEventListener('click', () => window.location.reload());
 </script>
 </body>
 </html>
