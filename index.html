@@ -115,16 +115,32 @@ p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 36px;font
 .ring-fg{fill:none;stroke:var(--gold);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .1s linear}
 .ring-fg.warn{stroke:var(--wrong)}
 .tnum{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;font-size:34px}
-.scoreboard-strip{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
-.score-chip{position:relative;display:flex;align-items:center;gap:16px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:14px 26px;box-shadow:0 4px 10px rgba(20,90,70,.08)}
-.score-chip.mine{border-color:var(--turq);background:#E6F8F8}
-.sc-name{font-family:'Baloo 2';font-weight:700;font-size:20px;color:var(--muted);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.score-chip.mine .sc-name{color:var(--ink)}
-.sc-score{font-family:'Baloo 2';font-weight:800;font-size:28px;color:var(--gold)}
-@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.12);box-shadow:0 0 0 6px rgba(31,157,85,.3);border-color:var(--green)}100%{transform:scale(1)}}
-.score-chip.score-bump{animation:bump .9s ease}
-.score-pop{position:absolute;top:-14px;right:10px;font-family:'Baloo 2';font-weight:800;font-size:24px;color:var(--green);pointer-events:none;animation:popf 1.1s ease forwards}
-@keyframes popf{0%{opacity:0;transform:translateY(6px) scale(.7)}25%{opacity:1;transform:translateY(-10px) scale(1.15)}100%{opacity:0;transform:translateY(-42px)}}
+
+/* ===== YENİ SKOR PANOSU ===== */
+.scoreboard-strip{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;padding:4px 0}
+.score-chip{position:relative;display:flex;align-items:center;gap:14px;min-width:240px;max-width:340px;background:linear-gradient(180deg,#fff,#F1FAF6);border:2px solid var(--line);border-radius:24px;padding:12px 14px 17px 12px;box-shadow:0 8px 20px rgba(20,90,70,.12);overflow:hidden;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .3s}
+.score-chip.mine{border-color:var(--turq);box-shadow:0 0 0 3px rgba(0,163,163,.18),0 8px 20px rgba(0,120,120,.18)}
+.score-chip.leader{background:linear-gradient(180deg,#FFFBE8,#FFF1BF);border-color:#E8B923;box-shadow:0 10px 24px rgba(200,150,0,.25)}
+.score-chip.leader.mine{box-shadow:0 0 0 3px rgba(0,163,163,.28),0 10px 24px rgba(200,150,0,.25)}
+.sc-rank{flex-shrink:0;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;font-size:22px;color:var(--muted);background:#E4EEEA;box-shadow:inset 0 -3px 0 rgba(0,0,0,.06)}
+.sc-rank.medal{background:transparent;box-shadow:none;font-size:34px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.2))}
+.sc-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.sc-name-row{display:flex;align-items:center;gap:6px}
+.sc-name{font-family:'Baloo 2';font-weight:700;font-size:20px;color:var(--ink);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc-label{font-size:11px;font-weight:900;letter-spacing:2px;color:var(--muted);opacity:.75}
+.sc-score{flex-shrink:0;min-width:64px;text-align:center;font-family:'Baloo 2';font-weight:800;font-size:30px;line-height:1;color:#fff;padding:8px 14px 6px;border-radius:16px;background:linear-gradient(180deg,#1FB6A6,var(--turq-dark));box-shadow:0 4px 10px rgba(0,120,120,.3),inset 0 2px 0 rgba(255,255,255,.3);text-shadow:0 2px 3px rgba(0,0,0,.2)}
+.score-chip.leader .sc-score{background:linear-gradient(180deg,#F8C93A,#D49A00);box-shadow:0 4px 10px rgba(180,130,0,.35),inset 0 2px 0 rgba(255,255,255,.4)}
+.sc-bar{position:absolute;left:0;bottom:0;height:6px;width:0;background:linear-gradient(90deg,var(--turq),#8CC63F);border-radius:0 6px 6px 0;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.score-chip.leader .sc-bar{background:linear-gradient(90deg,#F8C93A,#E8A400)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.07) translateY(-3px)}100%{transform:scale(1)}}
+.score-chip.score-bump{animation:bump .8s ease}
+.score-chip.score-bump .sc-score{animation:scoreFlash .9s ease}
+@keyframes scoreFlash{0%{filter:brightness(1)}30%{filter:brightness(1.35);transform:scale(1.18)}100%{filter:brightness(1);transform:scale(1)}}
+.score-chip.score-bump::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%);transform:translateX(-120%);animation:shine .9s ease forwards;pointer-events:none}
+@keyframes shine{to{transform:translateX(120%)}}
+.score-pop{position:absolute;top:6px;right:12px;font-family:'Baloo 2';font-weight:800;font-size:20px;color:#fff;background:linear-gradient(180deg,#34C37A,var(--green));padding:2px 12px;border-radius:14px;box-shadow:0 4px 10px rgba(31,157,85,.45);pointer-events:none;animation:popf 1.3s ease forwards;z-index:2}
+@keyframes popf{0%{opacity:0;transform:translateY(10px) scale(.6)}20%{opacity:1;transform:translateY(-6px) scale(1.15)}70%{opacity:1;transform:translateY(-10px) scale(1)}100%{opacity:0;transform:translateY(-26px) scale(.95)}}
+
 .question-card{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:36px 50px;box-shadow:var(--shadow)}
 #q-figure{display:none;justify-content:center;margin-bottom:16px}
 #q-figure.show{display:flex}
@@ -150,7 +166,7 @@ p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 36px;font
 .rr-rank{font-family:'Baloo 2';font-weight:800;color:var(--muted);width:36px;font-size:22px}
 .rr-name{font-family:'Baloo 2';font-weight:700;font-size:24px;flex:1;text-align:left;word-break:break-word}
 .rr-score{font-family:'Baloo 2';font-weight:800;font-size:30px;color:var(--gold)}
-@media(max-width:900px){.options-grid{grid-template-columns:1fr}.sc-name{max-width:90px}.question-card{padding:24px 20px}}
+@media(max-width:900px){.options-grid{grid-template-columns:1fr}.sc-name{max-width:100px}.score-chip{min-width:200px}.question-card{padding:24px 20px}}
 #screen-intro{gap:22px;overflow:hidden}
 .intro-welcome{display:flex;flex-direction:column;align-items:center;text-align:center;gap:26px;padding:0 20px}
 .intro-logo{width:clamp(110px,15vw,190px);height:auto;object-fit:contain;opacity:0;filter:drop-shadow(0 10px 20px rgba(20,90,70,.3));animation:iIn .6s ease .1s forwards,iOut .6s ease 4.2s forwards}
@@ -388,44 +404,73 @@ function scatterLogosFrom(el) {
   setTimeout(() => layer.remove(), 2000);
 }
 
-let audioCtx = null;
+// ===== SESLER (yumuşak çan/marimba tınısı) =====
+let audioCtx = null, masterIn = null;
 function getAudioCtx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if (audioCtx.state === 'suspended') audioCtx.resume();
   return audioCtx;
 }
-function playTone(freq, dur, type, delay, peak) {
+// Tüm sesler: alçak geçiren filtre -> kompresör -> çıkış (sert tonları yumuşatır)
+function getMaster() {
+  const c = getAudioCtx();
+  if (!masterIn) {
+    const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 4200; lp.Q.value = 0.5;
+    const comp = c.createDynamicsCompressor();
+    const g = c.createGain(); g.gain.value = 0.9;
+    lp.connect(comp); comp.connect(g); g.connect(c.destination);
+    masterIn = lp;
+  }
+  return masterIn;
+}
+// Çan/zil benzeri nota: temel ses + üst harmonikler, doğal sönümlü
+function bell(freq, dur, delay, peak) {
   try {
-    const c = getAudioCtx(), o = c.createOscillator(), g = c.createGain();
-    o.type = type || 'sine'; o.frequency.value = freq;
-    const t0 = c.currentTime + (delay || 0);
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime(peak || 0.3, t0 + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    o.connect(g).connect(c.destination);
-    o.start(t0); o.stop(t0 + dur + 0.05);
+    const c = getAudioCtx(), out = getMaster(), t0 = c.currentTime + (delay || 0), p = peak || 0.2;
+    [[1, 1, 1], [2, 0.32, 0.55], [3, 0.1, 0.35], [4.2, 0.05, 0.2]].forEach(function (h) {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = 'sine'; o.frequency.value = freq * h[0];
+      const d = dur * h[2];
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(p * h[1], t0 + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+      o.connect(g).connect(out);
+      o.start(t0); o.stop(t0 + d + 0.05);
+    });
   } catch (e) {}
 }
-function playSlide(f1, f2, dur, delay, peak) {
+// Yumuşak kayan "bloop" (yanlış cevap için)
+function softSlide(f1, f2, dur, delay, peak) {
   try {
-    const c = getAudioCtx(), o = c.createOscillator(), g = c.createGain();
-    o.type = 'sawtooth';
+    const c = getAudioCtx(), out = getMaster(), o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine';
     const t0 = c.currentTime + (delay || 0);
     o.frequency.setValueAtTime(f1, t0);
     o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
     g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime(peak || 0.24, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(peak || 0.2, t0 + 0.03);
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    o.connect(g).connect(c.destination);
+    o.connect(g).connect(out);
     o.start(t0); o.stop(t0 + dur + 0.05);
   } catch (e) {}
 }
+// Doğru: parlak, yükselen pentatonik çan arpeji (Do-Mi-Sol-Do-Mi)
 function playCorrectSound() {
-  const n = [523.25, 659.25, 783.99, 1046.5, 1318.5], t = [0, .07, .14, .21, .30];
-  n.forEach((f, i) => { playTone(f, 0.24, 'triangle', t[i], 0.26); playTone(f * 2, 0.14, 'sine', t[i], 0.09); });
+  [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => bell(f, 1.1, i * 0.085, 0.17));
 }
-function playWrongSound() { playSlide(380, 160, 0.32, 0, 0.24); playSlide(320, 130, 0.36, 0.24, 0.2); }
-function playVictorySound() { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => playTone(f, 0.24, 'triangle', i * 0.15, 0.22)); }
+// Yanlış: nazik, alçalan iki "bloop" (ttok ama rahatsız etmeyen)
+function playWrongSound() {
+  softSlide(330, 247, 0.28, 0, 0.2);
+  softSlide(262, 196, 0.38, 0.2, 0.18);
+}
+// Zafer: yükselen arpej + son akor
+function playVictorySound() {
+  [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => bell(f, 1.2, i * 0.14, 0.17));
+  [523.25, 659.25, 783.99, 1046.5, 1568].forEach(f => bell(f, 2.2, 0.62, 0.11));
+}
+// Geri sayım tıkı ve yeni soru zili
+function playTick(final) { bell(final ? 1046.5 : 784, final ? 0.7 : 0.35, 0, final ? 0.16 : 0.1); }
+function playNewQuestionSound() { bell(880, 0.5, 0, 0.08); bell(1318.5, 0.6, 0.09, 0.07); }
 
 let serverTimeOffset = 0;
 onValue(ref(db, ".info/serverTimeOffset"), s => { serverTimeOffset = s.val() || 0; });
@@ -434,46 +479,46 @@ const getServerNow = () => Date.now() + serverTimeOffset;
 // ===== SORULAR (4 şıklı, 40 adet) =====
 // Şekilli soru eklemek için soruya "figure" alanı (SVG metni) ekleyebilirsin.
 const QUESTION_BANK = [
-  { question: "Güneş, gök cisimleri sınıflandırmasında aşağıdakilerden hangisidir?", options: ["Gezegen", "Yıldız", "Uydu", "Gök taşı"], answer: "B" },
-  { question: "Dünya'nın Güneş etrafında bir tam turu yaklaşık ne kadar sürer?", options: ["24 saat", "30 gün", "Yaklaşık 365 gün 6 saat", "Yaklaşık 12 saat"], answer: "C" },
-  { question: "Ay'ın evreleri neden oluşur?", options: ["Ay'ın Dünya'nın gölgesinde kalması", "Ay'ın kendi ışığını değiştirmesi", "Bulutların Ay'ı örtmesi", "Ay'ın aydınlık yüzünün Dünya'dan farklı kısımlarının görünmesi"], answer: "D" },
-  { question: "Aşağıdakilerden hangisi doğal bir ışık kaynağıdır?", options: ["Ay", "Ayna", "Güneş", "Gezegen"], answer: "C" },
-  { question: "Ses aşağıdaki ortamlardan hangisinde yayılamaz?", options: ["Boşluk", "Su", "Hava", "Demir"], answer: "A" },
-  { question: "Aşağıdakilerden hangisi saf maddedir?", options: ["Tuzlu su", "Altın", "Hava", "Çorba"], answer: "B" },
-  { question: "Deniz seviyesinde saf suyun kaynama sıcaklığı kaç °C'dir?", options: ["50", "90", "100", "120"], answer: "C" },
-  { question: "Bitkilerin güneş ışığı yardımıyla kendi besinini üretmesine ne ad verilir?", options: ["Solunum", "Fotosentez", "Boşaltım", "Terleme"], answer: "B" },
-  { question: "Aşağıdaki canlılardan hangisi omurgasızdır?", options: ["Kedi", "Balık", "Kurbağa", "Kelebek"], answer: "D" },
-  { question: "Kalbin vücuttaki temel görevi aşağıdakilerden hangisidir?", options: ["Besinleri sindirmek", "Kanı vücuda pompalamak", "Havayı temizlemek", "Atıkları süzmek"], answer: "B" },
-  { question: "Besinlerin mekanik sindirimi vücutta ilk olarak nerede başlar?", options: ["Mide", "İnce bağırsak", "Yemek borusu", "Ağız"], answer: "D" },
-  { question: "Aşağıdaki maddelerden hangisi mıknatıs tarafından çekilir?", options: ["Demir", "Plastik", "Cam", "Ahşap"], answer: "A" },
-  { question: "İki mıknatısın aynı kutupları birbirine yaklaştırıldığında ne olur?", options: ["Birbirini çeker", "Birbirini iter", "Birbirini etkilemez", "Birbirini yok eder"], answer: "B" },
-  { question: "Katı bir maddenin ısı alarak sıvı hâle geçmesine ne ad verilir?", options: ["Donma", "Erime", "Buharlaşma", "Yoğuşma"], answer: "B" },
-  { question: "Su buharının soğuyarak sıvı suya dönüşmesi olayına ne ad verilir?", options: ["Kaynama", "Süblimleşme", "Yoğuşma", "Donma"], answer: "C" },
-  { question: "Dünya'nın kendi ekseni etrafında dönmesinin sonucu aşağıdakilerden hangisidir?", options: ["Mevsimlerin oluşması", "Gece ile gündüzün oluşması", "Ay'ın evreleri", "Gelgit olayı"], answer: "B" },
-  { question: "Mevsimlerin oluşmasının temel nedeni aşağıdakilerden hangisidir?", options: ["Dünya'nın eksen eğikliği ve Güneş etrafında dolanması", "Dünya'nın kendi etrafında dönmesi", "Ay'ın Dünya etrafında dönmesi", "Güneş'in yer değiştirmesi"], answer: "A" },
-  { question: "Ses şiddetinin birimi aşağıdakilerden hangisidir?", options: ["Newton", "Desibel", "Watt", "Metre"], answer: "B" },
-  { question: "Kuvvetin ölçü birimi aşağıdakilerden hangisidir?", options: ["Joule", "Kilogram", "Newton", "Litre"], answer: "C" },
-  { question: "Aşağıdakilerden hangisi yenilenebilir enerji kaynağıdır?", options: ["Kömür", "Petrol", "Doğalgaz", "Rüzgâr"], answer: "D" },
-  { question: "Besin zincirinde ilk halkayı oluşturan, kendi besinini üreten canlılar hangileridir?", options: ["Aslan", "Bitkiler", "Tavşan", "Yırtıcı kuşlar"], answer: "B" },
-  { question: "Hücrenin yönetim merkezi olarak kabul edilen kısım hangisidir?", options: ["Çekirdek", "Hücre zarı", "Sitoplazma", "Koful"], answer: "A" },
-  { question: "Bitkilerde suyu ve mineralleri topraktan alan kısım hangisidir?", options: ["Yaprak", "Gövde", "Kök", "Çiçek"], answer: "C" },
-  { question: "Aşağıdakilerden hangisi bir karışımdır?", options: ["Şekerli su", "Demir", "Oksijen", "Saf su"], answer: "A" },
-  { question: "Havayı oluşturan gazlar arasında en fazla bulunan gaz hangisidir?", options: ["Oksijen", "Azot", "Karbondioksit", "Hidrojen"], answer: "B" },
-  { question: "Sürtünme kuvveti, cismin hareket yönüne göre nasıl etki eder?", options: ["Hareket yönünde", "Hareket yönüne zıt yönde", "Aşağı doğru", "Yukarı doğru"], answer: "B" },
-  { question: "Bir elektrik devresinde ampulün yanabilmesi için aşağıdakilerden hangisi gereklidir?", options: ["Yalnızca pil ve ampul", "Yalnızca kablo", "Pil, kablo ve ampulden oluşan kapalı devre", "Yalnızca anahtar"], answer: "C" },
-  { question: "Aşağıdaki maddelerden hangisi elektriği iyi iletir?", options: ["Plastik", "Kauçuk", "Ahşap", "Bakır"], answer: "D" },
-  { question: "Dünya'ya en yakın yıldız hangisidir?", options: ["Güneş", "Ay", "Sirius", "Mars"], answer: "A" },
-  { question: "Güneş Sistemi'nin en büyük gezegeni hangisidir?", options: ["Dünya", "Jüpiter", "Satürn", "Neptün"], answer: "B" },
-  { question: "Aşağıdakilerden hangisi tüm canlıların ortak özelliği değildir?", options: ["Beslenme", "Solunum", "Yer değiştirme", "Üreme"], answer: "C" },
-  { question: "Kütle ölçü birimi aşağıdakilerden hangisidir?", options: ["Litre", "Metre", "Kilogram", "Saniye"], answer: "C" },
-  { question: "Termometre ile aşağıdakilerden hangisi ölçülür?", options: ["Sıcaklık", "Kütle", "Hacim", "Zaman"], answer: "A" },
-  { question: "Suyun doğadaki döngüsünde olaylar hangi sırayla gerçekleşir?", options: ["Yağış, buharlaşma, yoğuşma", "Buharlaşma, yoğuşma, yağış", "Yoğuşma, yağış, buharlaşma", "Yağış, yoğuşma, buharlaşma"], answer: "B" },
-  { question: "Aşağıdakilerden hangisi kimyasal değişimdir?", options: ["Buzun erimesi", "Kağıdın yırtılması", "Demirin paslanması", "Suyun buharlaşması"], answer: "C" },
-  { question: "Bir böceğin kaç bacağı vardır?", options: ["4", "6", "8", "10"], answer: "B" },
-  { question: "Aşağıdakilerden hangisi bir gezegen değildir?", options: ["Mars", "Venüs", "Satürn", "Ay"], answer: "D" },
-  { question: "Işığın bir yüzeye çarparak geri dönmesi olayına ne ad verilir?", options: ["Kırılma", "Yansıma", "Soğurulma", "Yayılma"], answer: "B" },
-  { question: "İki kemiğin birleştiği ve hareketi sağlayan bölgeye ne ad verilir?", options: ["Kas", "Eklem", "Deri", "Damar"], answer: "B" },
-  { question: "Maddenin tüm özelliklerini taşıyan en küçük yapı taşı için kullanılan temel kavram hangisidir?", options: ["Atom", "Hücre", "Molekül", "Karışım"], answer: "A" }
+  { question: "İnsan vücudunda kanı pompalayan organ hangisidir?", options: ["Akciğer", "Mide", "Beyin", "Kalp"], answer: "D" },
+  { question: "Ay’ın Dünya’dan tamamen aydınlık bir daire şeklinde göründüğü evre hangisidir?", options: ["Yeni ay", "Dolunay", "İlk dördün", "Son dördün"], answer: "B" },
+  { question: "Hangi canlı kendi ışığını üretebilir?", options: ["Serçe", "Kaplumbağa", "Ateş böceği", "Kelebek"], answer: "C" },
+  { question: "Güneş'ten yayılan ışık Dünya'ya ne kadar sürede gelir?", options: ["6 dakika", "8 dakika", "10 dakika", "1 dakika"], answer: "B" },
+  { question: "Hangi hayvanın üç kalbi vardır?", options: ["Yunus", "Ahtapot", "Penguen", "Timsah"], answer: "B" },
+  { question: "Güneş’in Dünya’dan çok büyük olmasına rağmen gökyüzünde küçük görünmesinin nedeni aşağıdakilerden hangisidir?", options: ["Güneş’in ışığının az olması", "Güneş’in Dünya’dan çok uzakta olması", "Dünya’nın Güneş’ten büyük olması", "Güneş’in hareket etmemesi"], answer: "B" },
+  { question: "İnsan vücudundaki en küçük kemik nerede bulunur?", options: ["Ayakta", "Parmakta", "Dizde", "Kulakta"], answer: "D" },
+  { question: "Aşağıdakilerden hangisi Güneş ile Ay arasındaki farklardan biridir?", options: ["İkisi de gök cismidir.", "İkisi de uzayda bulunur.", "Güneş bir yıldız, Ay ise doğal uydudur.", "İkisi de kendi ışığını üretir."], answer: "C" },
+  { question: "Hangi canlı memeliler sınıfında yer alır?", options: ["Yarasa", "Penguen", "Timsah", "Köpek balığı"], answer: "A" },
+  { question: "Ay’ın yüzeyinde atmosferin çok ince olması aşağıdakilerden hangisinin oluşmasına neden olur?", options: ["Kraterlerin uzun süre korunmasına", "Ay’da sürekli yağmur yağmasına", "Ay’da ormanların oluşmasına", "Ay’ın ışık üretmesine"], answer: "A" },
+  { question: "Hangi hayvanın kanı mavidir?", options: ["Ahtapot", "Kedi", "Köpek", "Tavşan"], answer: "A" },
+  { question: "Güneş'in en dış katmanından bir önceki katmanının adı nedir?", options: ["Taç küre", "Renk küre", "Işık Küre", "Çekirdek"], answer: "B" },
+  { question: "Hangi hayvanın parmak izleri insanınkine oldukça benzer?", options: ["Koala", "Kedi", "At", "Tavşan"], answer: "A" },
+  { question: "Güneş lekeleri üzerinde çalışmalar yapan ve teleskop kullanarak Güneş’i gözlemleyen bilim insanı aşağıdakilerden hangisidir?", options: ["Neil Armstrong", "Galileo Galilei", "Yuri Gagarin", "Hezarfen Ahmed Çelebi"], answer: "B" },
+  { question: "İnsan vücudundaki en büyük organ hangisidir?", options: ["Kalp", "Karaciğer", "Akciğer", "Deri"], answer: "D" },
+  { question: "Güneş ışınları Dünya'ya yaklaşık kaç dakikada ulaşır?", options: ["8 dakika 20 saniye", "1 dakika", "30 dakika", "1 saat"], answer: "A" },
+  { question: "Güneş’in çekirdeğinin sıcaklığı yaklaşık kaç °C’dir?", options: ["6.000 °C", "150.000 °C", "15.000.000 °C", "150.000.000 °C"], answer: "C" },
+  { question: "Vücudumuzda hangi organ “ikinci beyni” olarak bilinir?", options: ["Kalp", "Mide", "Bağırsak", "Akciğer"], answer: "C" },
+  { question: "Güneş'in yapısında en çok hangi gazlar bulunur?", options: ["Hidrojen - Azot", "Helyum - Oksijen", "Oksijen - Hidrojen", "Hidrojen - Helyum"], answer: "D" },
+  { question: "Bir yıldırım sırasında önce ışığı görüp sonra sesi duymamızın nedeni nedir?", options: ["Sesin daha sıcak olması", "Işığın daha hızlı yayılması", "Sesin yalnızca geceleri yayılması", "Işığın daha fazla enerji taşıması"], answer: "B" },
+  { question: "Aşağıdaki sıralamalardan hangisinde Ay’ın ana evreleri doğru verilmiştir?", options: ["Dolunay → Yeni ay → İlk dördün → Son dördün", "Yeni ay → İlk dördün → Dolunay → Son dördün", "İlk dördün → Yeni ay → Son dördün → Dolunay", "Yeni ay → Dolunay → İlk dördün → Son dördün"], answer: "B" },
+  { question: "Dünyanın en büyük hayvanı hangisidir?", options: ["Afrika fili", "Zürafa", "Dev kalamar", "Mavi balina"], answer: "D" },
+  { question: "Ay ile Dünya arasındaki ortalama mesafe yaklaşık kaç kilometredir?", options: ["38.400 km", "384.400 km", "3.844.000 km", "38.440.000 km"], answer: "B" },
+  { question: "Hangi hayvanın dili vücudundan daha uzundur?", options: ["Fare", "Yılan", "Tavşan", "Bukalemun"], answer: "D" },
+  { question: "Bir öğrenci “Güneş’in ışığı Dünya’ya ulaşabiliyorsa Güneş ile Dünya arasında hava vardır.” diyor. Bu öğrencinin düşüncesi için hangisi söylenebilir?", options: ["Doğrudur, çünkü ışık yalnızca havada yayılır.", "Yanlıştır, çünkü ışık boşlukta da yayılabilir.", "Doğrudur, çünkü uzay Dünya atmosferinden oluşur.", "Yanlıştır, çünkü Güneş ışık üretmez."], answer: "B" },
+  { question: "Mıknatıs aşağıdaki maddelerden hangisini çeker?", options: ["Tahta kaşık", "Plastik tarak", "Cam bardak", "Demir çivi"], answer: "D" },
+  { question: "Ay’ın atmosferinin Dünya’nın atmosferine göre çok ince olmasının sonuçlarından biri aşağıdakilerden hangisi değildir?", options: ["Ay yüzeyindeki izlerin uzun süre korunabilmesi", "Ay’da sıcaklık farklarının fazla olması", "Meteorların yüzeye daha kolay ulaşabilmesi", "Ay’ın kendi ekseni etrafında dönmesi"], answer: "D" },
+  { question: "Dünya'nın kendi ekseni etrafındaki hareketi sonucunda ne oluşur?", options: ["Mevsimler", "Gece ve gündüz", "Yıl", "Ay tutulması"], answer: "B" },
+  { question: "Güneş ve Ay’ın hareketleriyle ilgili aşağıdakilerden hangisi doğrudur?", options: ["Güneş Dünya’nın, Ay ise Güneş’in etrafında dolanır.", "Ay Dünya’nın etrafında dolanır, Dünya ise Güneş’in etrafında dolanır.", "Güneş ve Ay, Dünya’nın etrafında dolanır.", "Ay hareketsizdir, Güneş Dünya’nın etrafında dolanır."], answer: "B" },
+  { question: "İnsan vücudunda dengeyi sağlayan yapı hangi organda bulunur?", options: ["Mide", "Kulak", "Kalp", "Akciğer"], answer: "B" },
+  { question: "Güneş’in yaklaşık yaşı kaçtır?", options: ["4,6 milyon yıl", "46 milyon yıl", "4,6 milyar yıl", "46 milyar yıl"], answer: "C" },
+  { question: "Suyun donma noktası kaç santigrat derecedir?", options: ["100", "50", "0", "-100"], answer: "C" },
+  { question: "Ay’ın kendi ekseni etrafındaki dönme süresi ile Dünya etrafındaki dolanma süresinin yaklaşık eşit olması aşağıdakilerden hangisine neden olur?", options: ["Ay’ın şeklinin değişmesine", "Ay’ın hep aynı yüzünün Dünya’dan görülmesine", "Ay’ın ışık üretmesine", "Ay’ın Dünya’dan uzaklaşmasına"], answer: "B" },
+  { question: "Aşağıdaki canlılardan hangisi omurgasızdır?", options: ["Balık", "Kurbağa", "Solucan", "Kertenkele"], answer: "C" },
+  { question: "Ay’ın Dünya etrafındaki hareketi ile ilgili aşağıdakilerden hangisi doğrudur?", options: ["Yaklaşık 27 günde tamamlanır.", "Yaklaşık 365 günde tamamlanır.", "24 saatte tamamlanır.", "Yaklaşık 29 günde tamamlanır."], answer: "A" },
+  { question: "Aşağıdaki canlılardan hangisi başkalaşım geçirir?", options: ["Kedi", "Kurbağa", "Serçe", "İnsan"], answer: "B" },
+  { question: "Bir yıldızın rengi ile sıcaklığı arasındaki ilişki düşünüldüğünde, en sıcak yıldızların rengi aşağıdakilerden hangisidir?", options: ["Kırmızı", "Sarı", "Turuncu", "Mavi"], answer: "D" },
+  { question: "Hangi hayvan kış uykusuna yatmasıyla bilinir?", options: ["Ayı", "Zürafa", "Zebra", "Tavuk"], answer: "A" },
+  { question: "Aşağıdaki öğrencilerden hangisinin Güneş lekeleriyle ilgili açıklaması doğrudur?", options: ["“Güneş lekeleri, Güneş’in üzerine düşen Dünya gölgeleridir.”", "“Güneş lekeleri, Güneş’in yüzeyinde daha soğuk oldukları için koyu görünen bölgelerdir.”", "“Güneş lekeleri, Güneş’in dışında bulunan asteroitlerdir.”", "“Güneş lekeleri, Güneş’in tamamen karanlık bölgeleridir.”"], answer: "B" },
+  { question: "Ay dolunay evresinden ilk dördün evresine kaç günde geçer?", options: ["1 hafta", "2 hafta", "3 hafta", "4 hafta"], answer: "C" }
 ];
 
 const MIN_TEAMS = 2;
@@ -641,10 +686,12 @@ function startCountdown() {
   overlay.classList.add('active');
   let count = 3;
   numDiv.textContent = count;
+  playTick(false);
   const iv = setInterval(function () {
     count--;
-    if (count > 0) { numDiv.textContent = count; return; }
+    if (count > 0) { numDiv.textContent = count; playTick(false); return; }
     clearInterval(iv);
+    playTick(true);
     get(roomRef()).then(snap => {
       const d = snap.val();
       if (d && d.hostId === myTeamId) update(roomRef(), { status: 'playing', currentQ: 0, qStartTime: serverTimestamp() });
@@ -654,33 +701,79 @@ function startCountdown() {
 
 function startGameScreen() { showScreen('game'); setupGameListeners(); }
 
+// ===== SKOR PANOSU =====
 let prevScores = {}, scoresInitialized = false;
+const MEDALS = ['🥇', '🥈', '🥉'];
+const MAX_POINTS = () => QUESTION_BANK.length * 10;
+
+function animateCount(el, from, to, ms) {
+  const start = performance.now();
+  (function step(now) {
+    const p = Math.min(1, (now - start) / ms);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(from + (to - from) * eased);
+    if (p < 1) requestAnimationFrame(step);
+  })(start);
+}
+
 function renderScoreboard(data) {
   const strip = $('scoreboard-strip');
   strip.innerHTML = '';
   const teams = data.teams || {};
-  const arr = Object.keys(teams).map(id => ({ id, name: teams[id].name, score: teams[id].score }));
+  const arr = Object.keys(teams).map(id => ({ id, name: teams[id].name, score: teams[id].score || 0 }));
   arr.sort((a, b) => b.score - a.score);
   if (!scoresInitialized) { arr.forEach(t => { prevScores[t.id] = t.score; }); scoresInitialized = true; }
-  arr.forEach(function (t) {
+  const topScore = arr.length ? arr[0].score : 0;
+
+  arr.forEach(function (t, idx) {
+    const isLeader = topScore > 0 && t.score === topScore;
     const chip = document.createElement('div');
-    chip.className = 'score-chip' + (t.id === myTeamId ? ' mine' : '');
+    chip.className = 'score-chip' + (t.id === myTeamId ? ' mine' : '') + (isLeader ? ' leader' : '');
+
+    const rank = document.createElement('div');
+    if (idx < 3 && topScore > 0) { rank.className = 'sc-rank medal'; rank.textContent = MEDALS[idx]; }
+    else { rank.className = 'sc-rank'; rank.textContent = idx + 1; }
+    chip.appendChild(rank);
+
+    const info = document.createElement('div');
+    info.className = 'sc-info';
+    const nameRow = document.createElement('div');
+    nameRow.className = 'sc-name-row';
     const ns = document.createElement('span');
     ns.className = 'sc-name'; ns.textContent = t.name;
-    const ss = document.createElement('span');
-    ss.className = 'sc-score'; ss.textContent = t.score;
-    chip.appendChild(ns);
-    if (t.id === myTeamId) chip.appendChild(makeEditBtn(t.name, true));
-    chip.appendChild(ss);
+    nameRow.appendChild(ns);
+    if (t.id === myTeamId) nameRow.appendChild(makeEditBtn(t.name, true));
+    const lbl = document.createElement('span');
+    lbl.className = 'sc-label'; lbl.textContent = t.id === myTeamId ? 'SİZ' : 'SINIF';
+    info.appendChild(nameRow);
+    info.appendChild(lbl);
+    chip.appendChild(info);
+
+    const ss = document.createElement('div');
+    ss.className = 'sc-score';
     const prev = (typeof prevScores[t.id] === 'number') ? prevScores[t.id] : t.score;
+    ss.textContent = prev;
+    chip.appendChild(ss);
+
+    const bar = document.createElement('div');
+    bar.className = 'sc-bar';
+    chip.appendChild(bar);
+    const pct = Math.min(100, (t.score / MAX_POINTS()) * 100);
+    const prevPct = Math.min(100, (prev / MAX_POINTS()) * 100);
+    bar.style.width = prevPct + '%';
+    requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = pct + '%'; }));
+
     const diff = t.score - prev;
     if (diff > 0) {
+      animateCount(ss, prev, t.score, 700);
       const pop = document.createElement('div');
       pop.className = 'score-pop'; pop.textContent = '+' + diff;
       chip.appendChild(pop);
       chip.classList.add('score-bump');
-      setTimeout(() => chip.classList.remove('score-bump'), 900);
-      setTimeout(() => pop.remove(), 1100);
+      setTimeout(() => chip.classList.remove('score-bump'), 1000);
+      setTimeout(() => pop.remove(), 1300);
+    } else {
+      ss.textContent = t.score;
     }
     prevScores[t.id] = t.score;
     strip.appendChild(chip);
@@ -711,6 +804,7 @@ function renderQuestion(qIndex, data) {
   if (activeQIndex !== qIndex) {
     activeQIndex = qIndex;
     isAnsweredCurrentQ = false;
+    playNewQuestionSound();
     $('q-progress').textContent = "Soru " + (qIndex + 1) + "/" + QUESTION_BANK.length;
     $('q-text').textContent = question.question;
     $('game-status-line').textContent = "";
@@ -757,6 +851,7 @@ function startTimer(qStartTime) {
   clearInterval(timerInterval);
   const timerNum = $('timer-num'), ringFg = $('ring-fg');
   const max = 170;
+  let lastTick = -1;
   timerInterval = setInterval(function () {
     const elapsed = Math.floor((getServerNow() - qStartTime) / 1000);
     const remaining = Math.max(0, QUESTION_TIME - elapsed);
@@ -764,6 +859,7 @@ function startTimer(qStartTime) {
     ringFg.style.strokeDasharray = max;
     ringFg.style.strokeDashoffset = max - (remaining / QUESTION_TIME) * max;
     ringFg.classList.toggle('warn', remaining <= 5);
+    if (remaining <= 5 && remaining > 0 && remaining !== lastTick && !isAnsweredCurrentQ) { lastTick = remaining; playTick(false); }
     if (remaining <= 0) {
       clearInterval(timerInterval);
       disableOptions();
@@ -836,6 +932,7 @@ function runChampionReveal(text) {
       const img = document.createElement('img');
       img.src = src; img.alt = ""; img.className = 'reveal-logo-pop';
       stage.appendChild(img);
+      bell(659.25 + i * 130, 0.6, 0, 0.12);
     }, i * per);
   });
   const after = seq.length * per + 150;
